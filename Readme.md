@@ -1,7 +1,7 @@
 # Личный проект «Пиксель хантер» [![Build status][travis-image]][travis-url]
 
 * Студент: [Екатерина Крутакова](https://up.htmlacademy.ru/ecmascript/4/user/234149).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Рубец] (https://htmlacademy.ru/profile/amator).
 
 ---
 
