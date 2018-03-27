@@ -1,4 +1,3 @@
-const body = document.querySelector(`body`);
 const mainScreen = document.querySelector(`main.central`);
 const greetingScreen = document.querySelector(`#greeting`).content;
 const rulesScreen = document.querySelector(`#rules`).content;
@@ -13,8 +12,8 @@ const keyCodes = {
 };
 let currentScreenNumber = 0;
 
-const renderScreen = (screenNumber) => {
-  let node = screens[screenNumber].cloneNode(true);
+const renderScreen = (number) => {
+  let node = screens[number].cloneNode(true);
 
   while (mainScreen.firstChild) {
     mainScreen.removeChild(mainScreen.firstChild);
@@ -23,18 +22,20 @@ const renderScreen = (screenNumber) => {
 };
 
 const onBodyAltArrowPress = (evt) => {
-  e.preventDefault();
-  if (evt.keyCode === keyCodes.ARROW_RIGHT && evt.altKey && currentScreenNumber < (screens.length - 1)) {
+  const lastScreenNumber = screens.length - 1;
+  const firstScreenNumber = 0;
+
+  evt.preventDefault();
+  if (evt.keyCode === keyCodes.ARROW_RIGHT && evt.altKey && currentScreenNumber < lastScreenNumber) {
     currentScreenNumber++;
     renderScreen(currentScreenNumber);
-  } else if (evt.keyCode === keyCodes.ARROW_LEFT && evt.altKey && currentScreenNumber > 0) {
+  } else if (evt.keyCode === keyCodes.ARROW_LEFT && evt.altKey && currentScreenNumber > firstScreenNumber) {
     currentScreenNumber--;
     renderScreen(currentScreenNumber);
   }
-  document.removeEventListener(`keydown`, onBodyAltArrowPress);
 };
 
 renderScreen(currentScreenNumber);
-body.addEventListener(`keydown`, onBodyAltArrowPress);
+document.addEventListener(`keydown`, onBodyAltArrowPress);
 
 
