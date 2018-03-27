@@ -1,11 +1,5 @@
 const mainScreen = document.querySelector(`main.central`);
-const greetingScreen = document.querySelector(`#greeting`).content;
-const rulesScreen = document.querySelector(`#rules`).content;
-const statsScreen = document.querySelector(`#stats`).content;
-const game1Screen = document.querySelector(`#game-1`).content;
-const game2Screen = document.querySelector(`#game-2`).content;
-const game3Screen = document.querySelector(`#game-3`).content;
-const screens = [greetingScreen, rulesScreen, game1Screen, game2Screen, game3Screen, statsScreen];
+const screens = document.querySelectorAll(`template`);
 const keyCodes = {
   ARROW_RIGHT: 39,
   ARROW_LEFT: 37
@@ -13,7 +7,7 @@ const keyCodes = {
 let currentScreenNumber = 0;
 
 const renderScreen = (number) => {
-  let node = screens[number].cloneNode(true);
+  let node = screens[number].content.cloneNode(true);
 
   while (mainScreen.firstChild) {
     mainScreen.removeChild(mainScreen.firstChild);
