@@ -23,7 +23,7 @@ const renderScreen = (screenNumber) => {
 };
 
 
-const onDocumentAltArrowPress = (e) => {
+const onBodyAltArrowPress = (e) => {
   e.preventDefault();
   if (e.keyCode === keyCodes.ARROW_RIGHT && e.altKey && currentScreenNumber < (screens.length - 1)) {
     currentScreenNumber++;
@@ -32,9 +32,9 @@ const onDocumentAltArrowPress = (e) => {
     currentScreenNumber--;
     renderScreen(currentScreenNumber);
   }
-  document.removeEventListener(`keydown`, onDocumentAltArrowPress);
+  document.removeEventListener(`keydown`, onBodyAltArrowPress);
 };
 
-body.addEventListener(`keydown`, onDocumentAltArrowPress);
+body.addEventListener(`keydown`, onBodyAltArrowPress);
 
 
