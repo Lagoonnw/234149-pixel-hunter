@@ -22,8 +22,9 @@ const shouldSwitchToNextScreen = (evt) => evt.keyCode === Keycode.ARROW_RIGHT &&
 const shouldSwitchToPreviousScreen = (evt) => evt.keyCode === Keycode.ARROW_LEFT && currentScreenNumber > firstScreenNumber;
 
 const onBodyAltArrowPress = (evt) => {
-  evt.preventDefault();
-  if (evt.altKey) {
+  if (!evt.altKey) {
+    return;
+  } else {
     if (shouldSwitchToNextScreen(evt)) {
       currentScreenNumber++;
       renderScreen(currentScreenNumber);
