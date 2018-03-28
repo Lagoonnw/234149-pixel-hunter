@@ -24,14 +24,13 @@ const shouldSwitchToPreviousScreen = (evt) => evt.keyCode === Keycode.ARROW_LEFT
 const onBodyAltArrowPress = (evt) => {
   if (!evt.altKey) {
     return;
-  } else {
-    if (shouldSwitchToNextScreen(evt)) {
-      currentScreenNumber++;
-      renderScreen(currentScreenNumber);
-    } else if (shouldSwitchToPreviousScreen(evt)) {
-      currentScreenNumber--;
-      renderScreen(currentScreenNumber);
-    }
+  }
+  if (shouldSwitchToNextScreen(evt)) {
+    currentScreenNumber++;
+    renderScreen(currentScreenNumber);
+  } else if (shouldSwitchToPreviousScreen(evt)) {
+    currentScreenNumber--;
+    renderScreen(currentScreenNumber);
   }
 };
 
