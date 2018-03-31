@@ -11,4 +11,4 @@ const renderScreen = (screen) => {
   mainScreen.appendChild(screen);
 };
 
-export {renderScreen as default};
+export default renderScreen;

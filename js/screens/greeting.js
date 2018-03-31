@@ -1,8 +1,8 @@
 import {greetingTemplate} from './../templates/greeting.js';
 import {footer} from './../templates/footer.js';
-import {default as rulesScreen} from './rules.js';
-import {default as getElementFromTemplate} from './../utils/get-element.js';
-import {default as renderScreen} from './../utils/render-screen.js';
+import rulesScreen from './rules.js';
+import getElementFromTemplate from './../utils/get-element.js';
+import renderScreen from './../utils/render-screen.js';
 
 const page = `${greetingTemplate}\n${footer}`;
 const greetingScreen = getElementFromTemplate(page);
@@ -15,4 +15,4 @@ const onArrowClick = (evt) => {
 
 arrow.addEventListener(`click`, onArrowClick);
 
-export {greetingScreen as default};
+export default greetingScreen;

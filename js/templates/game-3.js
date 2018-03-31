@@ -1,5 +1,6 @@
 // language=HTML
-export const gameThreeTemplate = `<div class="game">
+export const gameThreeTemplate = `
+  <div class="game">
     <p class="game__task">Найдите рисунок среди изображений</p>
     <form class="game__content  game__content--triple">
       <div class="game__option">

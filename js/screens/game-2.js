@@ -21,4 +21,4 @@ const onFormChange = () => {
 form.addEventListener(`change`, onFormChange);
 addBackToIntroHandler(gameTwoScreen);
 
-export {gameTwoScreen as default};
+export default gameTwoScreen;

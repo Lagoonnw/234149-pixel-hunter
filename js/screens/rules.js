@@ -1,8 +1,8 @@
 import {rulesTemplate} from './../templates/rules.js';
 import {footer} from './../templates/footer.js';
-import {default as gameOneScreen} from './game-1.js';
-import {default as getElementFromTemplate} from './../utils/get-element.js';
-import {default as renderScreen} from './../utils/render-screen.js';
+import gameOneScreen from './game-1.js';
+import getElementFromTemplate from './../utils/get-element.js';
+import renderScreen from './../utils/render-screen.js';
 import {addBackToIntroHandler} from './../utils/back-to-intro.js';
 
 const page = `${rulesTemplate}\n${footer}`;
@@ -26,4 +26,4 @@ input.addEventListener(`keyup`, onInputKeyUp);
 submitBtn.addEventListener(`click`, onSubmitBtnClick);
 addBackToIntroHandler(rulesScreen);
 
-export {rulesScreen as default};
+export default rulesScreen;

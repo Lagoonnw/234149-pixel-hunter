@@ -14,4 +14,4 @@ const onAsteriskClick = () => {
 
 asterisk.addEventListener(`click`, onAsteriskClick);
 
-export {introScreen as default};
+export default introScreen;

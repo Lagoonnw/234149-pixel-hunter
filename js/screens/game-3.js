@@ -19,4 +19,4 @@ for (let option of options) {
 }
 addBackToIntroHandler(gameThreeScreen);
 
-export {gameThreeScreen as default};
+export default gameThreeScreen;

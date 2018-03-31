@@ -4,4 +4,4 @@ const getElementFromTemplate = (template) => {
   return element;
 };
 
-export {getElementFromTemplate as default};
+export default getElementFromTemplate;

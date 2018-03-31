@@ -8,4 +8,4 @@ const statsScreen = getElementFromTemplate(page);
 
 addBackToIntroHandler(statsScreen);
 
-export {statsScreen as default};
+export default statsScreen;
