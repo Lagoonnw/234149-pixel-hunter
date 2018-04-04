@@ -8,7 +8,7 @@ const POINT = {
   RANGE: 50
 };
 
-export const setGamePoints = (answers = [], lifeNumber = LifeNumber.max) => {
+const setGamePoints = (answers = [], lifeNumber = LifeNumber.min) => {
   if (lifeNumber < LifeNumber.min || lifeNumber > LifeNumber.max) {
     throw new RangeError(`lifeNumber should be in range from 0 to 3`);
   }
@@ -38,3 +38,5 @@ export const setGamePoints = (answers = [], lifeNumber = LifeNumber.max) => {
 
   return score;
 };
+
+export default setGamePoints;
