@@ -1,19 +1,7 @@
-const TOTAL_ANSWERS = 10;
-const Lives = {
-  max: 3,
-  min: 0
-};
-const Point = {
-  UNIT: 100,
-  RANGE: 50
-};
-const TimerBreakPoints = {
-  fast: 10,
-  slow: 20
-};
+import {TOTAL_ANSWERS, Lives, Point, TimerBreakPoints} from './game-config.js';
 
-const setGamePoints = (answers = [], lives = Lives.min) => {
-  if (lives < Lives.min || lives > Lives.max) {
+const setGamePoints = (answers = [], lives = Lives.MIN) => {
+  if (lives < Lives.MIN || lives > Lives.MAX) {
     throw new RangeError(`lifeNumber should be in range from 0 to 3`);
   }
   if (typeof lives !== `number`) {
@@ -30,10 +18,10 @@ const setGamePoints = (answers = [], lives = Lives.min) => {
     if (answer.correct) {
       return sum + Point.UNIT;
     }
-    if (answer.correct && answer.time <= TimerBreakPoints.fast) {
+    if (answer.correct && answer.time <= TimerBreakPoints.FAST) {
       return sum + Point.RANGE;
     }
-    if (answer.correct && answer.time >= TimerBreakPoints.slow) {
+    if (answer.correct && answer.time >= TimerBreakPoints.SLOW) {
       return sum - Point.RANGE;
     }
     return sum;
