@@ -9,13 +9,8 @@ const POINT = {
 };
 
 export const setGamePoints = (answers = [], lifeNumber = LifeNumber.max) => {
-  let wrongAnswersNumber = 0;
-  let fastAnswersNumber = 0;
-  let slowAnswersNumber = 0;
-  let score = (answers.length - wrongAnswersNumber) * POINT.UNIT + (fastAnswersNumber + lifeNumber) * POINT.RANGE - slowAnswersNumber * POINT.RANGE;
-
-  if (lifeNumber < LifeNumber.min) {
-    throw new RangeError(`lifeNumber should be positive`);
+  if (lifeNumber < LifeNumber.min || lifeNumber > LifeNumber.max) {
+    throw new RangeError(`lifeNumber should be in range from 0 to 3`);
   }
   if (typeof lifeNumber !== `number`) {
     throw new TypeError(`lifeNumber should be a type of number`);
@@ -26,18 +21,20 @@ export const setGamePoints = (answers = [], lifeNumber = LifeNumber.max) => {
   if (answers.length < TOTAL_ANSWERS) {
     return -1;
   }
+  const points = answers.reduce((sum, answer) => {
+    if (answer.correct) {
+      return sum + POINT.UNIT;
+    }
+    if (answer.correct && answer.time <= 10) {
+      return sum + POINT.RANGE;
+    }
+    if (answer.correct && answer.time >= 20) {
+      return sum - POINT.RANGE;
+    }
+    return sum;
+  }, 0);
 
-  for (let answer of answers) {
-    if (!answer.correct) {
-      wrongAnswersNumber++;
-    }
-    if (answer.time < 10) {
-      fastAnswersNumber++;
-    }
-    if (answer.time > 20) {
-      slowAnswersNumber++;
-    }
-  }
+  const score = points + lifeNumber * POINT.RANGE;
 
   return score;
 };
