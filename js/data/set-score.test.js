@@ -59,7 +59,7 @@ describe(`Game setting score`, () => {
       answers.push(correctFastAnswer);
       answers.push(correctSlowAnswer);
       answers.push(defaultIncorrectAnswer);
-      assert.equal(1000, setGamePoints(answers, 2));
+      assert.equal(1000, setGamePoints(answers, lives));
     });
   });
 
