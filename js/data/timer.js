@@ -6,7 +6,6 @@ class Timer {
     if (time < 0) {
       throw new Error(`time should be a positive number`);
     }
-
     this.zero = 0;
     this.time = time;
     this.finish = `time is up!`;

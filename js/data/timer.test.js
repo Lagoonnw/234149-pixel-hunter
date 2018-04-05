@@ -12,19 +12,25 @@ const testTimerWithIncorrectData = (errorMessage, value) => {
 };
 
 describe(`Timer test`, () => {
-  it(`should throw an error if time is not a type of number`, () => {
-    testTimerWithIncorrectData(`time should be a type of number`, `2`);
+  describe(`Test incorrect data`, () => {
+    it(`should throw an error if time is not a type of number`, () => {
+      const strokeTime = `2`;
+      testTimerWithIncorrectData(`time should be a type of number`, strokeTime);
+    });
+    it(`should throw an error if time is a negative number`, () => {
+      const negativeTime = -5;
+      testTimerWithIncorrectData(`time should be a positive number`, negativeTime);
+    });
   });
-  it(`should throw an error if time is a negative number`, () => {
-    testTimerWithIncorrectData(`time should be a positive number`, -5);
-  });
-  it(`should tick once from 3 to 2`, () => {
-    assert.equal(2, timer.tick());
-  });
-  it(`should tick once from 2 to 1`, () => {
-    assert.equal(1, timer.tick());
-  });
-  it(`should tick once from 1 to 0`, () => {
-    assert.equal(`time is up!`, timer.tick());
+  describe(`Test timer logic`, () => {
+    it(`should tick once from 3 to 2`, () => {
+      assert.equal(2, timer.tick());
+    });
+    it(`should tick once from 2 to 1`, () => {
+      assert.equal(1, timer.tick());
+    });
+    it(`should tick once from 1 to 0`, () => {
+      assert.equal(`time is up!`, timer.tick());
+    });
   });
 });

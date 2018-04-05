@@ -27,9 +27,7 @@ const setGamePoints = (answers = [], lives = Lives.MIN) => {
     return sum;
   }, 0);
 
-  const score = points + lives * Point.RANGE;
-
-  return score;
+  return points + lives * Point.RANGE;
 };
 
 export default setGamePoints;
