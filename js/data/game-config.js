@@ -1,4 +1,8 @@
 const TOTAL_ANSWERS = 10;
+const Time = {
+  MIN: 0,
+  MAX: 30
+};
 const Lives = {
   MAX: 3,
   MIN: 0
@@ -12,4 +16,4 @@ const TimerBreakPoints = {
   SLOW: 20
 };
 
-export {TOTAL_ANSWERS, Lives, Point, TimerBreakPoints};
+export {TOTAL_ANSWERS, Lives, Time, Point, TimerBreakPoints};

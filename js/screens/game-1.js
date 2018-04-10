@@ -1,11 +1,13 @@
 import {gameOneTemplate} from './../templates/game-1.js';
-import {header} from './../templates/header.js';
+import renderHeader from './../templates/header.js';
 import {footer} from './../templates/footer.js';
 import gameTwoScreen from './game-2.js';
 import getElementFromTemplate from './../utils/get-element.js';
 import renderScreen from './../utils/render-screen.js';
 import {addBackToIntroHandler} from './../utils/back-to-intro.js';
+import {initialState} from './../data/data.js';
 
+const header = renderHeader(initialState);
 const page = `${header}\n${gameOneTemplate}\n${footer}`;
 const gameOneScreen = getElementFromTemplate(page);
 const form = gameOneScreen.querySelector(`form`);
