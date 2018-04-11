@@ -2,7 +2,7 @@ const randomInteger = (min, max) => {
   return Math.floor(min + Math.random() * (max + 1 - min));
 };
 
-const images = {
+export const images = {
   paintings: [
     // People
     `https://k42.kn3.net/CF42609C8.jpg`,
@@ -25,17 +25,23 @@ const images = {
   ]
 };
 
-const levels = {
-  [`level-1`]: {
+export const questions = [
+  {
+    type: `double`,
     title: `Угадайте для каждого изображения фото или рисунок?`,
-    images: [images.paintings[randomInteger(0, 2)], images.photos[randomInteger(0, 2)]]
+    options: [images.paintings[randomInteger(0, 2)], images.photos[randomInteger(0, 2)]],
+    answers: [`paint`, `photo`]
   },
-  [`level-2`]: {
+  {
+    type: `wide`,
     title: `Угадай, фото или рисунок?`,
-    images: [images.paintings[randomInteger(0, 2)]]
+    options: [images.paintings[randomInteger(0, 2)]],
+    answers: [`paint`]
   },
-  [`level-3`]: {
+  {
+    type: `triple`,
     title: `Найдите рисунок среди изображений`,
-    images: [images.paintings[randomInteger(0, 2)], images.photos[randomInteger(0, 2)], images.paintings[randomInteger(0, 2)]]
+    options: [images.paintings[randomInteger(0, 2)], images.photos[randomInteger(0, 2)], images.paintings[randomInteger(0, 2)]],
+    answers: [`paint`, `photo`, `photo`]
   }
-};
+];

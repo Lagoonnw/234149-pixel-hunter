@@ -1,9 +1,11 @@
-// language=HTML
-export const gameOneTemplate = `
-     <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
+export const renderGameOneTemplate = (question) => {
+  const [optionOne, optionTwo] = question.options;
+
+  return `
+     <p class="game__task">${question.title}</p>
      <form class="game__content">
        <div class="game__option">
-         <img src="http://placehold.it/468x458" alt="Option 1" width="468" height="458">
+         <img src="${optionOne}" alt="Option 1" width="468" height="458">
          <label class="game__answer game__answer--photo">
            <input name="question1" type="radio" value="photo">
            <span>Фото</span>
@@ -14,7 +16,7 @@ export const gameOneTemplate = `
          </label>
        </div>
        <div class="game__option">
-         <img src="http://placehold.it/468x458" alt="Option 2" width="468" height="458">
+         <img src="${optionTwo}" alt="Option 2" width="468" height="458">
          <label class="game__answer  game__answer--photo">
            <input name="question2" type="radio" value="photo">
            <span>Фото</span>
@@ -25,3 +27,4 @@ export const gameOneTemplate = `
          </label>
        </div>
      </form>`;
+};

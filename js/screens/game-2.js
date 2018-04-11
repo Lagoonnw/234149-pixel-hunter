@@ -2,17 +2,17 @@ import {gameTwoTemplate} from './../templates/game-2.js';
 import renderStatsBar from './../templates/stats-bar.js';
 import renderHeader from './../templates/header.js';
 import {footer} from './../templates/footer.js';
-import {default as gameThreeScreen} from './game-3.js';
-import {default as getElementFromTemplate} from './../utils/get-element.js';
-import {default as renderScreen} from './../utils/render-screen.js';
+import gameThreeScreen from './game-3.js';
+import getElementFromTemplate from './../utils/get-element.js';
+import renderScreen from './../utils/render-screen.js';
 import {addBackToIntroHandler} from './../utils/back-to-intro.js';
-import {initialState, currentGameState} from './../data/game-config.js';
+// import {initialState, currentGameState} from './../data/game-config.js';
 // import {answers} from './../data/state-container.js';
 import {Answer} from './../data/answer.js';
 
-export default (data) => {
-  const header = renderHeader(data);
-  const statsBar = renderStatsBar(data.answers);
+export default (state) => {
+  const header = renderHeader(state);
+  const statsBar = renderStatsBar(state.userAnswers);
   const page = `${header}\n<div class="game">${gameTwoTemplate}${statsBar}</div>\n${footer}`;
   console.log(page);
   const screen = getElementFromTemplate(page);

@@ -15,18 +15,4 @@ export const TimerBreakPoints = {
   FAST: 10,
   SLOW: 20
 };
-export const initialState = {
-  answers: [],
-  lives: Lives.MAX,
-  time: Time.MIN
-};
 
-export const defaultAnwer = {
-  correct: false,
-  time: Time.MAX
-};
-export const currentGameState = {
-  answers: initialState.answers,
-  lives: 3,
-  time: initialState.level
-};
