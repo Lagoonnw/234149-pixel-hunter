@@ -6,24 +6,23 @@ import {default as statsScreen} from './stats.js';
 import {default as getElementFromTemplate} from './../utils/get-element.js';
 import {default as renderScreen} from './../utils/render-screen.js';
 import {addBackToIntroHandler} from './../utils/back-to-intro.js';
-import {initialState} from './../data/game-config.js';
-import {answers} from './../data/state-container.js';
+import {initialState, currentGameState} from './../data/game-config.js';
 
-const header = renderHeader(initialState);
-const statsBar = renderStatsBar(answers);
-const page = `${header}\n<div class="game">${gameThreeTemplate}${statsBar}</div>\n${footer}`;
-const gameThreeScreen = getElementFromTemplate(page);
-const options = gameThreeScreen.querySelectorAll(`.game__option `);
+export default (data) => {
+  const header = renderHeader(data);
+  const statsBar = renderStatsBar(data.answers);
+  const page = `${header}\n<div class="game">${gameThreeTemplate}${statsBar}</div>\n${footer}`;
+  const gameThreeScreen = getElementFromTemplate(page);
+  const options = gameThreeScreen.querySelectorAll(`.game__option `);
 
-const onOptionClick = () => {
-  answers.push({correct: true, time: 15});
-  console.log(answers);
-  renderScreen(statsScreen);
+  const onOptionClick = () => {
+    renderScreen(statsScreen);
+  };
+
+  for (let option of options) {
+    option.addEventListener(`click`, onOptionClick);
+  }
+  addBackToIntroHandler(gameThreeScreen);
+
+  return gameThreeScreen;
 };
-
-for (let option of options) {
-  option.addEventListener(`click`, onOptionClick);
-}
-addBackToIntroHandler(gameThreeScreen);
-
-export default gameThreeScreen;

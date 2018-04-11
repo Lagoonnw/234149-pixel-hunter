@@ -1,11 +1,11 @@
 import {TOTAL_ANSWERS} from './../data/game-config';
 
-const renderStatsBar = (answers = []) => {
+const renderStatsBar = (answers) => {
   const answerTypes = [];
 
-  for (const answer of answers) {
+  answers.forEach((answer) => {
     answerTypes.push(`<li class="stats__result stats__result--${answer.type}"></li>`);
-  }
+  });
 
   return `<div class="stats">
     <ul class="stats">
@@ -16,6 +16,5 @@ const renderStatsBar = (answers = []) => {
     </ul>
   </div>`;
 };
-
 
 export default renderStatsBar;
