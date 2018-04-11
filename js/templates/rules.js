@@ -1,3 +1,4 @@
+import {TOTAL_ANSWERS, Time, Lives} from './../data/game-config.js';
 // language=HTML
 export const rulesTemplate = `
   <header class="header">
@@ -10,12 +11,12 @@ export const rulesTemplate = `
   </header>
   <div class="rules">
     <h1 class="rules__title">Правила</h1>
-    <p class="rules__description">Угадай 10 раз для каждого изображения фото <img
+    <p class="rules__description">Угадай ${TOTAL_ANSWERS} раз для каждого изображения фото <img
       src="img/photo_icon.png" width="16" height="16"> или рисунок <img
       src="img/paint_icon.png" width="16" height="16" alt="">.<br>
       Фотографиями или рисунками могут быть оба изображения.<br>
-      На каждую попытку отводится 30 секунд.<br>
-      Ошибиться можно не более 3 раз.<br>
+      На каждую попытку отводится ${Time.MAX} секунд.<br>
+      Ошибиться можно не более ${Lives.MAX} раз.<br>
       <br>
       Готовы?
     </p>
