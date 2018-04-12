@@ -22,11 +22,13 @@ const onInputKeyUp = () => validateForm();
 const onSubmitBtnClick = () => {
   currentGameState.setUserName(input.value.trim());
   input.removeEventListener(`keyup`, onInputKeyUp);
+  console.log(currentGameState);
   renderScreen(gameOneScreen(currentGameState));
 };
 
 input.addEventListener(`keyup`, onInputKeyUp);
 submitBtn.addEventListener(`click`, onSubmitBtnClick);
 addBackToIntroHandler(rulesScreen);
+console.log(currentGameState);
 
 export default rulesScreen;

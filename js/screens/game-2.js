@@ -1,4 +1,4 @@
-import {gameTwoTemplate} from './../templates/game-2.js';
+import {renderGameTwoTemplate} from './../templates/game-2.js';
 import renderStatsBar from './../templates/stats-bar.js';
 import renderHeader from './../templates/header.js';
 import {footer} from './../templates/footer.js';
@@ -13,8 +13,8 @@ import {Answer} from './../data/answer.js';
 export default (state) => {
   const header = renderHeader(state);
   const statsBar = renderStatsBar(state.userAnswers);
+  const gameTwoTemplate = renderGameTwoTemplate(state.questions[state.level]);
   const page = `${header}\n<div class="game">${gameTwoTemplate}${statsBar}</div>\n${footer}`;
-  console.log(page);
   const screen = getElementFromTemplate(page);
   const form = screen.querySelector(`form`);
 

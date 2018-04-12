@@ -1,13 +1,16 @@
-import {questions} from "../data/data.js";
+import {getScaledSize} from "../utils/get-scaled-image-size.js";
+import {renderGameOneTemplate} from "./game-1";
+import {dimentions} from "../data/game-config.js";
 
-const question = questions[1];
-const option = question.options;
+export const renderGameTwoTemplate = (question) => {
+  const [img] = question.options;
+  const size = getScaledSize(dimentions.get(`single`), img.size);
 
-export const gameTwoTemplate = `
+  return `
     <p class="game__task">${question.title}</p>
     <form class="game__content  game__content--wide">
       <div class="game__option">
-        <img src="${option}" alt="Option 1" width="705" height="455">
+        <img src="${img.url}" alt="Option 1" width="${size.width}" height="${size.height}">
         <label class="game__answer  game__answer--photo">
           <input name="question1" type="radio" value="photo">
           <span>Фото</span>
@@ -18,3 +21,5 @@ export const gameTwoTemplate = `
         </label>
       </div>
     </form>`;
+};
+

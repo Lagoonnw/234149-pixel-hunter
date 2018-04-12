@@ -20,17 +20,6 @@ export default (state) => {
   const gameOneScreen = getElementFromTemplate(page);
   const form = gameOneScreen.querySelector(`form`);
 
-  const checkAnswer = () => {
-
-  };
-
-  const removeLive = (remove = false) => {
-    if(!remove) {
-      return;
-    }
-    --state.lives;
-  };
-
   const onFormChange = () => {
     const isFirstOptionChecked = form.querySelector(`form [name=question1]:checked`) !== null;
     const isSecondOptionChecked = form.querySelector(`form [name=question2]:checked`) !== null;

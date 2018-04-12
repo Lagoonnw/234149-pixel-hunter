@@ -1,6 +1,6 @@
-const randomInteger = (min, max) => {
-  return Math.floor(min + Math.random() * (max + 1 - min));
-};
+// const randomInteger = (min, max) => {
+//   return Math.floor(min + Math.random() * (max + 1 - min));
+// };
 
 export const images = {
   paintings: [
@@ -25,23 +25,32 @@ export const images = {
   ]
 };
 
-export const questions = [
+const questionList = [
   {
     type: `double`,
     title: `Угадайте для каждого изображения фото или рисунок?`,
-    options: [images.paintings[randomInteger(0, 2)], images.photos[randomInteger(0, 2)]],
+    options: [{url: images.paintings[0], size: {width: 600, height: 831}}, {url: images.photos[0], size:{width: 1080, height: 720}}],
     answers: [`paint`, `photo`]
   },
   {
     type: `wide`,
     title: `Угадай, фото или рисунок?`,
-    options: [images.paintings[randomInteger(0, 2)]],
+    options: [{url: images.paintings[1], size: {width: 468, height: 354}}],
     answers: [`paint`]
   },
   {
     type: `triple`,
     title: `Найдите рисунок среди изображений`,
-    options: [images.paintings[randomInteger(0, 2)], images.photos[randomInteger(0, 2)], images.paintings[randomInteger(0, 2)]],
+    options: [
+      {url: images.paintings[2], size: {width: 1200, height: 900}},
+      {url: images.photos[1],  size: {width: 650, height: 960}},
+      {url: images.paintings[1],  size: {width: 468, height: 354}}],
     answers: [`paint`, `photo`, `photo`]
   }
 ];
+
+const questions = [...questionList, ...questionList, ...questionList];
+questions.push(questionList[0]);
+export {questions};
+
+console.log(`questions`, questions);
