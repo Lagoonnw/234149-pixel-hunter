@@ -1,15 +1,17 @@
 import {introTemplate} from './../templates/intro.js';
-import {footer} from './../templates/footer.js';
-import {default as getElementFromTemplate} from './../utils/get-element.js';
-import {default as renderScreen} from './../utils/render-screen.js';
-import {default as greetingsScreen} from './greeting.js';
+import getElementFromTemplate from './../utils/get-element.js';
+import renderScreen from './../utils/render-screen.js';
+import greetingsScreen from './greeting.js';
+import {GameState} from "../data/game-state.js";
+import {initialState} from "../data/data.js";
 
-const page = `${introTemplate}\n${footer}`;
+const page = `${introTemplate}`;
+const gameState = new GameState(initialState);
 const introScreen = getElementFromTemplate(page);
 const asterisk = introScreen.querySelector(`.intro__asterisk`);
 
 const onAsteriskClick = () => {
-  renderScreen(greetingsScreen);
+  renderScreen(greetingsScreen(gameState));
 };
 
 asterisk.addEventListener(`click`, onAsteriskClick);

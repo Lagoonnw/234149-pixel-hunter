@@ -5,7 +5,7 @@ export class Answer {
     this.type = this.setType();
   }
 
-  setType() {
+  _setType() {
     if (!this.correct) {
       return `wrong`;
     }

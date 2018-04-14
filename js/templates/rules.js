@@ -1,6 +1,7 @@
 import {TOTAL_ANSWERS, Time, Lives} from './../data/game-config.js';
+import {footer} from "./footer.js";
 // language=HTML
-export const rulesTemplate = `
+export default () => `
   <header class="header">
     <div class="header__back">
       <button class="back">
@@ -24,4 +25,4 @@ export const rulesTemplate = `
       <input class="rules__input" type="text" placeholder="Ваше Имя" required>
       <button class="rules__button  continue" type="submit" disabled>Go!</button>
     </form>
-  </div>`;
+  </div>${footer}`;

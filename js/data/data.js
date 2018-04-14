@@ -1,4 +1,6 @@
-export const images = {
+import {Lives} from "./game-config.js";
+
+const images = {
   paintings: [
     // People
     `https://k42.kn3.net/CF42609C8.jpg`,
@@ -20,12 +22,13 @@ export const images = {
     `http://i.imgur.com/DKR1HtB.jpg`
   ]
 };
-
 const questionList = [
   {
     type: `double`,
     title: `Угадайте для каждого изображения фото или рисунок?`,
-    options: [{url: images.paintings[0], size: {width: 600, height: 831}}, {url: images.photos[0], size:{width: 1080, height: 720}}],
+    options: [
+      {url: images.paintings[0], size: {width: 600, height: 831}},
+      {url: images.photos[0], size: {width: 1080, height: 720}}],
     answers: [`paint`, `photo`]
   },
   {
@@ -39,14 +42,18 @@ const questionList = [
     title: `Найдите рисунок среди изображений`,
     options: [
       {url: images.paintings[2], size: {width: 1200, height: 900}},
-      {url: images.photos[1],  size: {width: 650, height: 960}},
-      {url: images.paintings[1],  size: {width: 468, height: 354}}],
+      {url: images.photos[1], size: {width: 650, height: 960}},
+      {url: images.paintings[1], size: {width: 468, height: 354}}],
     answers: [false, true, false]
   }
 ];
+const gameQuestions = [...questionList, ...questionList, ...questionList];
+gameQuestions.push(questionList[0]);
 
-const questions = [...questionList, ...questionList, ...questionList];
-questions.push(questionList[0]);
-export {questions};
-
-console.log(`questions`, questions);
+export const initialState = {
+  statistics: [],
+  questions: gameQuestions,
+  lives: Lives.MAX,
+  level: 0,
+  userName: null
+};

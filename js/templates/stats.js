@@ -1,21 +1,28 @@
 import renderStatsBar from './stats-bar.js';
 import {footer} from './../templates/footer.js';
 import setScore from './../data/set-score.js';
-import {Point} from "../data/game-config.js";
-import {TimerBreakPoints} from "../data/game-config.js";
-import {Lives} from "../data/game-config.js";
-import {TOTAL_ANSWERS} from "../data/game-config.js";
+import {Point, TimerBreakPoints, Lives, TOTAL_ANSWERS} from "../data/game-config.js";
 
 export const getStatsTemplate = (state) => {
   const ZERO = 0;
-  const wrongAnswersNumber = state.userAnswers.filter((answer) => !answer.correct).length;
-  const slowAnswersNumber = state.userAnswers.filter((answer) => answer.time > TimerBreakPoints.SLOW).length;
-  const fastAnswersNumber = state.userAnswers.filter((answer) => answer.time < TimerBreakPoints.FAST).length;
-  const correctAnswersNumber = state.userAnswers.filter((answer) => answer.correct).length;
-  const stats = renderStatsBar(state.userAnswers);
+  const stats = renderStatsBar(state.statistics);
+  const wrongAnswersNumber = state.statistics.filter((answer) => !answer.correct).length;
+  const slowAnswersNumber = state.statistics.filter((answer) => answer.time > TimerBreakPoints.SLOW).length;
+  const fastAnswersNumber = state.statistics.filter((answer) => answer.time < TimerBreakPoints.FAST).length;
+  const correctAnswersNumber = state.statistics.filter((answer) => answer.correct).length;
+
+  const isItVictory = () => {
+    if (wrongAnswersNumber > Lives.MAX) {
+      return `Fail`;
+    }
+    if (state.statistics.length < TOTAL_ANSWERS) {
+      return `Fail`;
+    }
+    return `Победа!`;
+  };
 
   const renderTotal = () => {
-    if (wrongAnswersNumber > Lives.MAX || state.userAnswers.length < TOTAL_ANSWERS) {
+    if (wrongAnswersNumber > Lives.MAX || state.statistics.length < TOTAL_ANSWERS) {
       return `
       <td class="result__total"></td>
       <td class="result__total  result__total--final">fail</td>
@@ -26,16 +33,19 @@ export const getStatsTemplate = (state) => {
       <td class="result__points">×&nbsp;${Point.UNIT}</td>
       <td class="result__total">${correctAnswersNumber * Point.UNIT}</td>
     `;
-  }
+  };
 
   const renderTotalFinal = () => {
-    if (wrongAnswersNumber > Lives.MAX || state.userAnswers.length < TOTAL_ANSWERS) {
+    if (wrongAnswersNumber > Lives.MAX) {
+      return ``;
+    }
+    if (state.statistics.length < TOTAL_ANSWERS) {
       return ``;
     }
 
     return `
       <tr>
-        <td colspan="5" class="result__total  result__total--final">${setScore(state.userAnswers)}</td>
+        <td colspan="5" class="result__total  result__total--final">${setScore(state.statistics, state.lives)}</td>
       </tr>
     `;
   };
@@ -68,7 +78,7 @@ export const getStatsTemplate = (state) => {
       </tr>`;
   };
 
-  const renderMulctForFastAnswers = () => {
+  const renderMulctForSlowAnswers = () => {
     if (slowAnswersNumber === ZERO) {
       return ``;
     }
@@ -82,8 +92,8 @@ export const getStatsTemplate = (state) => {
       </tr>`;
   };
 
-  const  renderDetails = () => {
-    if (state.userAnswers.length < TOTAL_ANSWERS) {
+  const renderDetails = () => {
+    if (state.statistics.length < TOTAL_ANSWERS) {
       return ``;
     }
 
@@ -94,7 +104,7 @@ export const getStatsTemplate = (state) => {
     return `
       ${renderBonusForFastAnswers()}\n
       ${renderBonusForLives()}\n
-      ${renderMulctForFastAnswers()}\n
+      ${renderMulctForSlowAnswers()}\n
     `;
   };
 
@@ -107,7 +117,7 @@ export const getStatsTemplate = (state) => {
     </div>
   </header>
   <div class="result">
-    <h1>Победа!</h1>
+    <h1>${isItVictory()}</h1>
     <table class="result__table">
       <tr>
         <td class="result__number">1.</td>

@@ -17,7 +17,7 @@ export const TimerBreakPoints = {
 };
 
 export const dimentions = new Map()
-  .set(`single`, {width: 705, height: 455})
-  .set(`double`, {width: 468, height: 458})
-  .set(`triple`, {width: 304, height: 455});
+    .set(`single`, {width: 705, height: 455})
+    .set(`double`, {width: 468, height: 458})
+    .set(`triple`, {width: 304, height: 455});
 
