@@ -1,7 +1,3 @@
-// const randomInteger = (min, max) => {
-//   return Math.floor(min + Math.random() * (max + 1 - min));
-// };
-
 export const images = {
   paintings: [
     // People
@@ -45,7 +41,7 @@ const questionList = [
       {url: images.paintings[2], size: {width: 1200, height: 900}},
       {url: images.photos[1],  size: {width: 650, height: 960}},
       {url: images.paintings[1],  size: {width: 468, height: 354}}],
-    answers: [`paint`, `photo`, `photo`]
+    answers: [false, true, false]
   }
 ];
 

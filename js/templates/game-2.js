@@ -1,25 +1,32 @@
-import {getScaledSize} from "../utils/get-scaled-image-size.js";
-import {renderGameOneTemplate} from "./game-1";
 import {dimentions} from "../data/game-config.js";
+import getHeader from "./header.js";
+import {footer} from "./footer.js";
+import renderStatsBar from "./stats-bar.js";
 
-export const renderGameTwoTemplate = (question) => {
-  const [img] = question.options;
-  const size = getScaledSize(dimentions.get(`single`), img.size);
+export const getGameTwoTemplate = (state) => {
+  const header = getHeader(state);
+  const stats = renderStatsBar(state.userAnswers);
 
-  return `
-    <p class="game__task">${question.title}</p>
+  return `${header}\n
+  <div class="game">
+    <p class="game__task">${state.questions[state.level].title}</p>
     <form class="game__content  game__content--wide">
-      <div class="game__option">
-        <img src="${img.url}" alt="Option 1" width="${size.width}" height="${size.height}">
+      ${state.questions[state.level].options.map((option, i) => {
+      return `<div class="game__option">
+        <img src="${option.url}" alt="Option ${i + 1}" width="" height="">
         <label class="game__answer  game__answer--photo">
-          <input name="question1" type="radio" value="photo">
+          <input name="question${i + 1}" type="radio" value="photo">
           <span>Фото</span>
         </label>
         <label class="game__answer  game__answer--wide  game__answer--paint">
-          <input name="question1" type="radio" value="paint">
+          <input name="question${i + 1}" type="radio" value="paint">
           <span>Рисунок</span>
         </label>
-      </div>
-    </form>`;
+      </div>`;   
+      }).join(``)}
+    </form>
+    ${stats}\n
+    </div>
+    ${footer}`;
 };
 

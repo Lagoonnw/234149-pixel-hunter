@@ -1,7 +1,6 @@
 import {Lives} from './../data/game-config.js';
 
-const renderHeader = (state) => {
-  console.log(state);
+const getHeader = (state) => {
   const emptyLives = new Array(Lives.MAX - state.lives).fill(`<img src="img/heart__empty.svg" class="game__heart" alt="Life" width="32" height="32">`);
 
   return `<header class="header">
@@ -19,4 +18,4 @@ const renderHeader = (state) => {
   </header>`;
 };
 
-export default renderHeader;
+export default getHeader;

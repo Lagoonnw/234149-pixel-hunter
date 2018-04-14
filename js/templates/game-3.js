@@ -1,18 +1,22 @@
-import {questions} from "../data/data.js";
+import {dimentions} from "../data/game-config.js";
+import getHeader from "./header.js";
+import {footer} from "./footer.js";
+import renderStatsBar from "./stats-bar.js";
 
-const question = questions[2];
-const [optionOne, optionTwo, optionThree] = question.options;
-
-export const gameThreeTemplate = `
-    <p class="game__task">${question.title}</p>
+export const getThreeTemplate = (state) => {
+  const header = getHeader(state);
+  const stats = renderStatsBar(state.userAnswers);
+  return `${header}\n
+    <div class="game">
+    <p class="game__task">${state.questions[state.level].title}</p>
     <form class="game__content  game__content--triple">
-      <div class="game__option">
-        <img src="${optionOne}" alt="Option 1" width="304" height="455">
-      </div>
-      <div class="game__option  game__option--selected">
-        <img src="${optionTwo}" alt="Option 1" width="304" height="455">
-      </div>
-      <div class="game__option">
-        <img src="${optionThree}" alt="Option 1" width="304" height="455">
-      </div>
-    </form>`;
+      ${state.questions[state.level].options.map((option, i) => {
+        return `<div class="game__option">
+                  <img src="${option.url}" alt="Option ${i + 1}" width="" height="">
+                </div>`;  
+      }).join(``)}
+    </form>
+      ${stats}
+    </div>
+    ${footer}`;
+};
