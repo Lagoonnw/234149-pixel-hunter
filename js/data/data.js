@@ -28,11 +28,12 @@ const questionList = [
     title: `Угадайте для каждого изображения фото или рисунок?`,
     options: [
       {url: images.paintings[0], size: {width: 600, height: 831}},
-      {url: images.photos[0], size: {width: 1080, height: 720}}],
+      {url: images.photos[0], size: {width: 1080, height: 720}}
+    ],
     answers: [`paint`, `photo`]
   },
   {
-    type: `wide`,
+    type: `single`,
     title: `Угадай, фото или рисунок?`,
     options: [{url: images.paintings[1], size: {width: 468, height: 354}}],
     answers: [`paint`]
@@ -43,7 +44,8 @@ const questionList = [
     options: [
       {url: images.paintings[2], size: {width: 1200, height: 900}},
       {url: images.photos[1], size: {width: 650, height: 960}},
-      {url: images.paintings[1], size: {width: 468, height: 354}}],
+      {url: images.paintings[1], size: {width: 468, height: 354}}
+    ],
     answers: [false, true, false]
   }
 ];
