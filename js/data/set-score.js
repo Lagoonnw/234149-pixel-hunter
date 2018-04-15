@@ -19,7 +19,7 @@ const setGamePoints = (answers = [], lives = Lives.MIN) => {
       return sum + Point.UNIT;
     }
     if (answer.correct && answer.time <= TimerBreakPoints.FAST) {
-      return sum + Point.RANGE;
+      return sum + Point.UNIT;
     }
     if (answer.correct && answer.time >= TimerBreakPoints.SLOW) {
       return sum - Point.RANGE;

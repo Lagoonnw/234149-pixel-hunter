@@ -62,5 +62,4 @@ describe(`Game setting score`, () => {
       assert.equal(1000, setGamePoints(answers, lives));
     });
   });
-
 });

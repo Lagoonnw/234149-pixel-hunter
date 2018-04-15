@@ -1,15 +1,23 @@
-const TOTAL_ANSWERS = 10;
-const Lives = {
+export const TOTAL_ANSWERS = 10;
+export const Time = {
+  MIN: 0,
+  MAX: 30
+};
+export const Lives = {
   MAX: 3,
   MIN: 0
 };
-const Point = {
+export const Point = {
   UNIT: 100,
   RANGE: 50
 };
-const TimerBreakPoints = {
+export const TimerBreakPoints = {
   FAST: 10,
   SLOW: 20
 };
 
-export {TOTAL_ANSWERS, Lives, Point, TimerBreakPoints};
+export const dimentions = new Map()
+    .set(`single`, {width: 705, height: 455})
+    .set(`double`, {width: 468, height: 458})
+    .set(`triple`, {width: 304, height: 455});
+

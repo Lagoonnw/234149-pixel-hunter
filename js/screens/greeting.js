@@ -1,18 +1,19 @@
-import {greetingTemplate} from './../templates/greeting.js';
-import {footer} from './../templates/footer.js';
+import getGreetingTemplate from './../templates/greeting.js';
 import rulesScreen from './rules.js';
 import getElementFromTemplate from './../utils/get-element.js';
 import renderScreen from './../utils/render-screen.js';
 
-const page = `${greetingTemplate}\n${footer}`;
-const greetingScreen = getElementFromTemplate(page);
-const arrow = greetingScreen.querySelector(`.greeting__continue`);
+export default (state) => {
+  const page = getGreetingTemplate();
+  const screen = getElementFromTemplate(page);
+  const arrow = screen.querySelector(`.greeting__continue`);
 
-const onArrowClick = (evt) => {
-  evt.preventDefault();
-  renderScreen(rulesScreen);
+  const onArrowClick = (evt) => {
+    evt.preventDefault();
+    renderScreen(rulesScreen(state));
+  };
+
+  arrow.addEventListener(`click`, onArrowClick);
+
+  return screen;
 };
-
-arrow.addEventListener(`click`, onArrowClick);
-
-export default greetingScreen;

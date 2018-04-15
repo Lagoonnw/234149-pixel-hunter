@@ -1,6 +1,9 @@
-// language=HTML
-export const header = `
-  <header class="header">
+import {Lives} from './../data/game-config.js';
+
+const getHeader = (state) => {
+  const emptyLives = new Array(Lives.MAX - state.lives).fill(`<img src="img/heart__empty.svg" class="game__heart" alt="Life" width="32" height="32">`);
+
+  return `<header class="header">
     <div class="header__back">
       <button class="back">
         <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
@@ -9,9 +12,10 @@ export const header = `
     </div>
     <h1 class="game__timer">NN</h1>
     <div class="game__lives">
-      <img src="img/heart__empty.svg" class="game__heart" alt="Life" width="32" height="32">
-      <img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">
-      <img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">
+      ${emptyLives.join(``)}
+      ${new Array(state.lives).fill(`<img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">`).join(``)}
     </div>
   </header>`;
+};
 
+export default getHeader;
