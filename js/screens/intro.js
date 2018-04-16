@@ -10,6 +10,7 @@ const gameState = new GameState(initialState);
 const introScreen = getElementFromTemplate(page);
 const asterisk = introScreen.querySelector(`.intro__asterisk`);
 
+
 const onAsteriskClick = () => {
   renderScreen(greetingsScreen(gameState));
 };
