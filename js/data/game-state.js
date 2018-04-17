@@ -1,6 +1,6 @@
 import {Lives, TOTAL_ANSWERS} from "./game-config";
 
-export class GameState {
+export default class GameState {
   constructor(state) {
     if (!state) {
       throw new Error(`State object must be passed to this class constructor`);
@@ -14,8 +14,8 @@ export class GameState {
     this._falseAnswers = 0;
   }
 
-  set newUserName(name) {
-    this.userName = name;
+  set userName(name) {
+    this._userName = name;
   }
 
   get _livesNumber() {

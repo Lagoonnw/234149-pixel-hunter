@@ -2,7 +2,7 @@ import {introTemplate} from './../templates/intro.js';
 import getElementFromTemplate from './../utils/get-element.js';
 import renderScreen from './../utils/render-screen.js';
 import greetingsScreen from './greeting.js';
-import {GameState} from "../data/game-state.js";
+import GameState from "../data/game-state.js";
 import {initialState} from "../data/data.js";
 
 const page = `${introTemplate}`;

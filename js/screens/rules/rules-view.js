@@ -38,21 +38,28 @@ export default class RulesView extends AbstractView {
   }
 
   bind() {
-    this.input = this.element.querySelector(`input`);
-    this.submitBtn = this.element.querySelector(`.rules__button`);
-    // this.onInputKeyup = (evt) => this.onKeyUp();
+    this.form = this.element.querySelector(`form`);
+    this.input = this.form.querySelector(`input`);
+    this.submitBtn = this.form.querySelector(`.rules__button`);
+    this.onInputKeyUp = (evt) => {
+      this.submitBtn.disabled = !this.form.checkValidity();
+    }
+
     this.onSubmitBtnClick = (evt) => {
       evt.preventDefault();
       this.onClick();
     };
 
-    // this.input.addEventListener(`keyup`, this.onInputKeyup);
+    this.input.addEventListener(`keyup`, this.onInputKeyUp);
     this.submitBtn.addEventListener(`click`, this.onSubmitBtnClick);
   }
 
-  onKeyUp() {
+  onClick() {
   }
 
-  onClick() {
+  unbind() {
+    this.input.removeEventListener(`keyup`, this.onInputKeyUp);
+    this.submitBtn.removeEventListener(`click`, this.onSubmitBtnClick);
+
   }
 }

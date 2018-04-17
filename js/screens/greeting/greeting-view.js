@@ -34,6 +34,6 @@ export default class GreetingView extends AbstractView {
     this.arrowBtn.addEventListener(`click`, this.onArrowBtnClick);
   }
 
-  onclick() {
+  onClick() {
   }
 };

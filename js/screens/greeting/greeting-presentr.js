@@ -5,7 +5,7 @@ import RulesPresentr from '../rules/rules-presentr.js';
 export default class GreetingPresentr {
   init() {
     this.view = new GreetingView();
-    this.view.onclick = () => rules.init();
+    this.view.onClick = () => rules.init();
     const rules = new RulesPresentr();
 
     render(this.view.element);

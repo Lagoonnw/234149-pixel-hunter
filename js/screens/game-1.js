@@ -15,6 +15,7 @@ export default (state) => {
 
   const checkAnswer = (value, answer) => value === answer;
 
+
   const isAnswerCorrect = () => {
     const [firstAnswer, secondAnswer] = state.questions[state.level].answers;
     const firstUserAnswer = form.querySelector(`form [name=question1]:checked`).value;

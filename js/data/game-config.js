@@ -21,3 +21,9 @@ export const dimentions = new Map()
     .set(`double`, {width: 468, height: 458})
     .set(`triple`, {width: 304, height: 455});
 
+export const GameTypes = {
+  single: `single`,
+  double: `double`,
+  triple: `triple`
+};
+
