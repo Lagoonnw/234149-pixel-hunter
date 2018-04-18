@@ -15,6 +15,9 @@
   top: 25px;
   left: 50%;
   transform: translateX(-50%);
+  &.blink {
+    animation: blink 1s linear infinite;
+  }
 }
 
 .game__lives {
@@ -136,4 +139,9 @@
     background-color: rgba(223, 78, 78, 0.4);
   }
 
+}
+
+@keyframes blink {
+  0% { color: rgba(255, 0, 0, 1); }
+  100% { color: rgba(255, 0, 0, 0); }
 }

@@ -4,6 +4,7 @@ import {dimentions} from '../../data/game-config';
 import {footer} from '../../templates/footer';
 import getHeader from '../../templates/header.js';
 import StatusBarView from '../../templates/stats-bar.js';
+import BackToIntro from "../../utils/back-to-intro.js";
 
 export default class GameTwoView extends AbstractView {
   constructor(state) {
@@ -40,6 +41,7 @@ export default class GameTwoView extends AbstractView {
   }
 
   bind() {
+    this.backToIntro = new BackToIntro(this.element);
     this.form = this.element.querySelector(`form`);
     this.onFormChange = (evt) => {
       const isOptionChecked = this.form.querySelector(`form [name=question1]:checked`) !== null;
@@ -51,6 +53,7 @@ export default class GameTwoView extends AbstractView {
     }
 
     this.form.addEventListener(`change`, this.onFormChange);
+    this.backToIntro.bind();
   }
 
   onAnswer() {
@@ -59,5 +62,15 @@ export default class GameTwoView extends AbstractView {
 
   unbind() {
     this.form.removeEventListener(`change`, this.onFormChange);
+    this.backToIntro.unbind();
   }
+
+  updateTimer(value) {
+    this.timer = this.element.querySelector(`.game__timer`);
+    this.timer.textContent = value;
+    if (value === 5) {
+      this.timer.classList.add(`blink`);
+    }
+  }
+
 }

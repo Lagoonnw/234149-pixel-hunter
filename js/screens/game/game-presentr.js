@@ -5,6 +5,8 @@ import StatsPresentr from '../stats/stats-presentr.js';
 import render from '../../utils/render-screen.js';
 import {GameTypes} from '../../data/game-config.js';
 import {Answer} from '../../data/answer.js';
+import {Time} from '../../data/game-config';
+import Timer from '../../data/timer.js';
 
 
 export default class GamePresentr {
@@ -14,30 +16,25 @@ export default class GamePresentr {
       [GameTypes.double]: GameOneView,
       [GameTypes.triple]: GameThreeView
     };
+
+    this.timer = new Timer(Time.MAX);
     this._die = -1;
+    this._second = 1000;
   }
 
   init(state) {
     this.state = state;
     this.view = this.createView(this.state);
     this.show();
+    this.timer.start();
 
     this.state.subscribe(() => {
-      console.log(`stats`,this.state.level === this._die);
-
       if (this.state.level === this._die) {
-        console.log(`stats`,this.state);
-
-
         const stats = new StatsPresentr();
-        console.log(`statsPR`, stats);
         stats.init(this.state);
       } else {
         this.changeScreen(this.state);
       }
-
-
-
     });
 
   }
@@ -61,7 +58,8 @@ export default class GamePresentr {
         isAnswerCorrect = this.checkThreeOptions(...args);
       }
 
-      const answer = new Answer(isAnswerCorrect, 15);
+      this.timer.stop();
+      const answer = new Answer(isAnswerCorrect, this.timer.currentTime);
       this.state.addAnswer(answer);
     };
 
@@ -75,6 +73,8 @@ export default class GamePresentr {
   changeScreen(state) {
     this.view = this.createView(state);
     this.show();
+    this.timer.clear();
+    this.timer.start();
   }
 
   checkAnswer(value, answer) {
@@ -100,4 +100,5 @@ export default class GamePresentr {
     const answers = this.state.questions[this.state.level].answers;
     return answers[index];
   }
+
 }

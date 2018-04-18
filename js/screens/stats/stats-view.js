@@ -3,6 +3,7 @@ import {footer} from '../../templates/footer';
 import StatusBarView from '../../templates/stats-bar.js';
 import {Lives, Point, TimerBreakPoints, TOTAL_ANSWERS} from '../../data/game-config.js';
 import setScore from "../../data/set-score";
+import BackToIntro from "../../utils/back-to-intro.js";
 
 export default class StatsView extends AbstractView {
   constructor(state) {
@@ -42,6 +43,15 @@ export default class StatsView extends AbstractView {
       </div>`;
 
     return this._template;
+  }
+
+  bind() {
+    this.backToIntro = new BackToIntro(this.element);
+    this.backToIntro.bind();
+  }
+
+  unbind() {
+    this.backToIntro.unbind();
   }
 
   isItVictory() {

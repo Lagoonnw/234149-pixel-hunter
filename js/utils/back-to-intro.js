@@ -1,12 +1,21 @@
-import renderScreen from './../utils/render-screen.js';
-import introScreen from './../screens/intro.js';
+import IntroPresentr from './../screens/intro/intro-presentr.js';
 
+export default class BackToIntro {
+  constructor(element) {
+    this.arrow = element.querySelector('button.back');
+    this.intro = new IntroPresentr();
+  }
 
-const onArrowClick = () => {
-  renderScreen(introScreen);
-};
+  bind() {
+    this.onArrowClick = (evt) => {
+      evt.preventDefault();
+      this.intro.init();
+    };
 
-export const addBackToIntroHandler = (screen) => {
-  const arrowBack = screen.querySelector(`button.back`);
-  arrowBack.addEventListener(`click`, onArrowClick);
-};
+    this.arrow.addEventListener(`click`, this.onArrowClick);
+  }
+
+  unbind() {
+    this.arrow.removeEventListener(`click`, this.onArrowClick);
+  }
+}

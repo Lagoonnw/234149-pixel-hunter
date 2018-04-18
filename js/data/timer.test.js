@@ -24,13 +24,13 @@ describe(`Timer test`, () => {
   });
   describe(`Test timer logic`, () => {
     it(`should tick once from 3 to 2`, () => {
-      assert.equal(2, timer.tick());
+      assert.equal(2, timer._tick());
     });
     it(`should tick once from 2 to 1`, () => {
-      assert.equal(1, timer.tick());
+      assert.equal(1, timer._tick());
     });
     it(`should tick once from 1 to 0`, () => {
-      assert.equal(`time is up!`, timer.tick());
+      assert.equal(`time is up!`, timer._tick());
     });
   });
 });

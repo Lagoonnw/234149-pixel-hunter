@@ -4,6 +4,7 @@ import {dimentions} from '../../data/game-config';
 import {footer} from '../../templates/footer';
 import getHeader from '../../templates/header.js';
 import StatusBarView from '../../templates/stats-bar.js';
+import BackToIntro from "../../utils/back-to-intro.js";
 
 export default class GameThreeView extends AbstractView {
   constructor(state) {
@@ -34,6 +35,7 @@ export default class GameThreeView extends AbstractView {
   }
 
   bind() {
+    this.backToIntro = new BackToIntro(this.element);
     this.options = Array.from(this.element.querySelectorAll(`.game__option`));
     this.onOptionClick = (evt) => {
       evt.preventDefault();
@@ -44,14 +46,25 @@ export default class GameThreeView extends AbstractView {
     for  (const option of this.options) {
       option.addEventListener(`click`, this.onOptionClick);
     }
+    this.backToIntro.bind();
   }
 
   unbind() {
     for  (const option of this.options) {
       option.removeEventListener(`click`, this.onOptionClick);
     }
+    this.backToIntro.unbind();
   }
 
   onAnswer() {
   }
+
+  updateTimer(value) {
+    this.timer = this.element.querySelector(`.game__timer`);
+    this.timer.textContent = value;
+    if (value === 5) {
+      this.timer.classList.add(`blink`);
+    }
+  }
+
 }
