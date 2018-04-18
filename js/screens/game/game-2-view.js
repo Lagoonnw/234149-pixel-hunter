@@ -17,7 +17,7 @@ export default class GameTwoView extends AbstractView {
     this._template = `
     ${this.header}\n
     <div class="game">
-      <p class="game__task">${this.state.questions[state.level].title}</p>
+      <p class="game__task">${this.state.questions[this.state.level].title}</p>
     <form class="game__content  game__content--wide">
       ${this.state.questions[this.state.level].options.map((option, i) => {
       return `<div class="game__option">

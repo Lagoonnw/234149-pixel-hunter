@@ -10,6 +10,7 @@ export default class GameState {
     this.level = state.level;
     this.userName = state.userName;
     this.questions = state.questions;
+    this.listners = new Set();
 
     this._falseAnswers = 0;
   }
@@ -24,10 +25,12 @@ export default class GameState {
 
   nextLevel() {
     if (this._falseAnswers > Lives.MAX) {
-      return -1;
+      this.level = -1;
+      return this.level;
     }
     if (this.statistics.length === TOTAL_ANSWERS) {
-      return -1;
+      this.level = -1;
+      return this.level;
     }
     if (this.statistics.length === 0) {
       return this.level;
@@ -41,6 +44,18 @@ export default class GameState {
     }
     this.statistics.push(answer);
     this._checkLives(answer);
+    this.nextLevel();
+    this.notifyAll();
+  }
+
+  subscribe(listener) {
+    this.listners.add(listener);
+  }
+
+  notifyAll() {
+    for (const listener of this.listners) {
+      listener(this.state);
+    }
   }
 
   _checkLives(answer) {

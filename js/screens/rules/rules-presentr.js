@@ -10,14 +10,13 @@ export default class RulesPresentr {
     this.view = new RulesView();
     this.view.onClick = () => onSubmitBtnClick();
 
-    const game = new GamePresentr(this.state);
+    const game = new GamePresentr();
     const input = this.view.element.querySelector(`input`);
 
     const onSubmitBtnClick = () => {
       this.state.userName = String.raw`${input.value.trim()}`;
-      console.log(`state`, this.state);
       this.view.unbind();
-      game.init();
+      game.init(this.state);
     };
 
     render(this.view.element);
