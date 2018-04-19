@@ -1,4 +1,4 @@
-import {TOTAL_ANSWERS, Lives, Point, TimerBreakPoints} from './game-config.js';
+import {TOTAL_ANSWERS, Lives, Point} from './game-config.js';
 
 const setGamePoints = (answers = [], lives = Lives.MIN) => {
   if (lives < Lives.MIN || lives > Lives.MAX) {
@@ -14,15 +14,15 @@ const setGamePoints = (answers = [], lives = Lives.MIN) => {
     return -1;
   }
 
-  const points = answers.reduce((sum, answer) => {
-    if (answer.correct) {
+  const points = answers.reduce((sum, it) => {
+    if (it.correct && it.type === `correct`) {
       return sum + Point.UNIT;
     }
-    if (answer.correct && answer.time <= TimerBreakPoints.FAST) {
-      return sum + Point.UNIT;
+    if (it.correct && it.type === `fast`) {
+      return sum + Point.UNIT + Point.RANGE;
     }
-    if (answer.correct && answer.time >= TimerBreakPoints.SLOW) {
-      return sum - Point.RANGE;
+    if (it.correct && it.type === `slow`) {
+      return sum + Point.UNIT - Point.RANGE;
     }
     return sum;
   }, 0);

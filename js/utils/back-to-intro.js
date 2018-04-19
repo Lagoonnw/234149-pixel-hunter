@@ -2,7 +2,7 @@ import IntroPresentr from './../screens/intro/intro-presentr.js';
 
 export default class BackToIntro {
   constructor(element) {
-    this.arrow = element.querySelector('button.back');
+    this.arrow = element.querySelector(`button.back`);
     this.intro = new IntroPresentr();
   }
 

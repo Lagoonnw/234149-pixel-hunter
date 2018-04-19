@@ -1,10 +1,11 @@
 import AbstractView from '../../abstract-view.js';
-import scaleImg from '../../utils/scale-images';
+import scaleImg from '../../utils/resize';
 import {dimentions} from '../../data/game-config';
 import {footer} from '../../templates/footer';
-import getHeader from '../../templates/header.js';
 import StatusBarView from '../../templates/stats-bar.js';
+import getHeader from '../../templates/header.js';
 import BackToIntro from '../../utils/back-to-intro.js';
+import timerHandler from '../../utils/timer-handler.js';
 
 export default class GameOneView extends AbstractView {
   constructor(state) {
@@ -15,28 +16,25 @@ export default class GameOneView extends AbstractView {
   }
 
   get template() {
-    this._template = `
-    ${this.header}\n
-    <div class="game">
-      <p class="game__task">${this.state.questions[this.state.level].title}</p>
-      <form class="game__content">
-      ${this.state.questions[this.state.level].options.map((option, i) => {
-      return `
-      <div class="game__option">
-        <img src="${option.url}" 
-        alt="Option ${i + 1}" 
-        width="${scaleImg(dimentions.get(`double`), option.size).width}" 
-        height="${scaleImg(dimentions.get(`double`), option.size).height}">
-        <label class="game__answer game__answer--photo">
-          <input name="question${i + 1}" type="radio" value="photo">
-          <span>Фото</span>
-        </label>
-        <label class="game__answer game__answer--paint">
-          <input name="question${i + 1}" type="radio" value="paint">
-          <span>Рисунок</span>
-        </label>
+    this._template = `${this.header}\n<div class="game">
+    <p class="game__task">${this.state.questions[this.state.level].title}</p>
+    <form class="game__content">
+    ${this.state.questions[this.state.level].options.map((option, i) => {
+    return `<div class="game__option">
+      <img src="${option.url}" 
+      alt="Option ${i + 1}" 
+      width="${scaleImg(dimentions.get(`double`), option.size).width}" 
+      height="${scaleImg(dimentions.get(`double`), option.size).height}">
+      <label class="game__answer game__answer--photo">
+        <input name="question${i + 1}" type="radio" value="photo">
+        <span>Фото</span>
+      </label>
+      <label class="game__answer game__answer--paint">
+        <input name="question${i + 1}" type="radio" value="paint">
+        <span>Рисунок</span>
+      </label>
       </div>`;
-    }).join(``)}\n
+  }).join(``)}\n
     </form>${this.stats}\n</div>${footer}`;
 
     return this._template;
@@ -45,7 +43,7 @@ export default class GameOneView extends AbstractView {
   bind() {
     this.backToIntro = new BackToIntro(this.element);
     this.form = this.element.querySelector(`form`);
-    this.onFormChange = (evt) => {
+    this.onFormChange = () => {
       const isFirstOptionChecked = this.form.querySelector(`form [name=question1]:checked`) !== null;
       const isSecondOptionChecked = this.form.querySelector(`form [name=question2]:checked`) !== null;
 
@@ -54,7 +52,7 @@ export default class GameOneView extends AbstractView {
         const secondOption = this.form.querySelector(`form [name=question2]:checked`).value.trim();
         this.onAnswer(firstOption, secondOption);
       }
-    }
+    };
 
     this.form.addEventListener(`change`, this.onFormChange);
     this.backToIntro.bind();
@@ -66,15 +64,10 @@ export default class GameOneView extends AbstractView {
   }
 
   updateTimer(value) {
-    this.timer = this.element.querySelector(`.game__timer`);
-    this.timer.textContent = value;
-    if (value === 5) {
-      this.timer.classList.add(`blink`);
-    }
+    const timer = this.element.querySelector(`.game__timer`);
+    timerHandler(value, timer);
   }
 
   onAnswer() {
   }
-
-
 }

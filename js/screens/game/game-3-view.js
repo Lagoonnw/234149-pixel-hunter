@@ -1,10 +1,11 @@
 import AbstractView from '../../abstract-view.js';
-import scaleImg from '../../utils/scale-images';
+import scaleImg from '../../utils/resize';
 import {dimentions} from '../../data/game-config';
 import {footer} from '../../templates/footer';
 import getHeader from '../../templates/header.js';
 import StatusBarView from '../../templates/stats-bar.js';
 import BackToIntro from "../../utils/back-to-intro.js";
+import timerHandler from "../../utils/timer-handler";
 
 export default class GameThreeView extends AbstractView {
   constructor(state) {
@@ -19,13 +20,14 @@ export default class GameThreeView extends AbstractView {
     <div class="game">
     <p class="game__task">${this.state.questions[this.state.level].title}</p>
     <form class="game__content  game__content--triple">
-      ${this.state.questions[this.state.level].options.map((option, i) => {
-      return `<div class="game__option">
-                <img src="${option.url}" alt="Option ${i + 1}" 
-                width="${scaleImg(dimentions.get(`triple`), option.size).width}" 
-                height="${scaleImg(dimentions.get(`triple`), option.size).height}">
-              </div>`;
-      }).join(``)}
+    ${this.state.questions[this.state.level].options.map((option, i) => {
+    return `
+    <div class="game__option">
+      <img src="${option.url}" alt="Option ${i + 1}" 
+      width="${scaleImg(dimentions.get(`triple`), option.size).width}" 
+      height="${scaleImg(dimentions.get(`triple`), option.size).height}">
+    </div>`;
+  }).join(``)}
     </form>
     ${this.stats}
     </div>
@@ -41,16 +43,16 @@ export default class GameThreeView extends AbstractView {
       evt.preventDefault();
       const _el = evt.target;
       this.onAnswer(this.options.indexOf(_el));
-    }
+    };
 
-    for  (const option of this.options) {
+    for (const option of this.options) {
       option.addEventListener(`click`, this.onOptionClick);
     }
     this.backToIntro.bind();
   }
 
   unbind() {
-    for  (const option of this.options) {
+    for (const option of this.options) {
       option.removeEventListener(`click`, this.onOptionClick);
     }
     this.backToIntro.unbind();
@@ -60,11 +62,8 @@ export default class GameThreeView extends AbstractView {
   }
 
   updateTimer(value) {
-    this.timer = this.element.querySelector(`.game__timer`);
-    this.timer.textContent = value;
-    if (value === 5) {
-      this.timer.classList.add(`blink`);
-    }
+    const timer = this.element.querySelector(`.game__timer`);
+    timerHandler(value, timer);
   }
 
 }

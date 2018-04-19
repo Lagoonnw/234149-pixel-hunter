@@ -9,35 +9,19 @@ export default class Timer {
 
     this.time = time;
     this.finish = `time is up!`;
+    this.zero = 0;
 
     this._time = time;
-    this._zero = 0;
   }
 
-  get currentTime() {
-    return this.time;
-  }
 
-  _tick() {
+  tick() {
     if (this.time === this.zero) {
       return this.finish;
     }
     this.time--;
+
     return this.time || this.finish;
-  }
-
-  start() {
-    this._timer = setInterval(() => {
-      this._tick();
-      if (this.time === this._zero) {
-        this.stop();
-      }
-      console.log(this.time);
-    },1000);
-  }
-
-  stop() {
-    clearInterval(this._timer);
   }
 
   clear() {

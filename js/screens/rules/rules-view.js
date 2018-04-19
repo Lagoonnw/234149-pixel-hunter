@@ -1,7 +1,6 @@
 import AbstractView from '../../abstract-view.js';
 import {Lives, Time, TOTAL_ANSWERS} from '../../data/game-config';
 import {footer} from '../../templates/footer';
-import {addBackToIntroHandler} from '../../utils/back-to-intro.js';
 import BackToIntro from "../../utils/back-to-intro.js";
 
 export default class RulesView extends AbstractView {
@@ -44,9 +43,9 @@ export default class RulesView extends AbstractView {
     this.input = this.form.querySelector(`input`);
     this.submitBtn = this.form.querySelector(`.rules__button`);
     this.backToIntro = new BackToIntro(this.element);
-    this.onInputKeyUp = (evt) => {
+    this.onInputKeyUp = () => {
       this.submitBtn.disabled = !this.form.checkValidity();
-    }
+    };
 
     this.onSubmitBtnClick = (evt) => {
       evt.preventDefault();

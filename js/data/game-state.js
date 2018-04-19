@@ -5,21 +5,21 @@ export default class GameState {
     if (!state) {
       throw new Error(`State object must be passed to this class constructor`);
     }
+    this.listners = new Set();
     this.statistics = state.statistics;
     this.lives = state.lives;
     this.level = state.level;
     this.userName = state.userName;
     this.questions = state.questions;
-    this.listners = new Set();
 
     this._falseAnswers = 0;
   }
 
-  set userName(name) {
-    this._userName = name;
+  set user(name) {
+    this.userName = name;
   }
 
-  get _livesNumber() {
+  get livesNumber() {
     return this.lives;
   }
 
@@ -43,7 +43,7 @@ export default class GameState {
       this._falseAnswers = ++this._falseAnswers;
     }
     this.statistics.push(answer);
-    this._checkLives(answer);
+    this.checkLives(answer);
     this.nextLevel();
     this.notifyAll();
   }
@@ -58,7 +58,7 @@ export default class GameState {
     }
   }
 
-  _checkLives(answer) {
+  checkLives(answer) {
     if (!answer.correct && this.lives > Lives.MIN) {
       return --this.lives;
     }

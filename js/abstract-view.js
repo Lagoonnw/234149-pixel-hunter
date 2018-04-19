@@ -1,5 +1,3 @@
-import render from './utils/render-screen.js';
-
 export default class AbstractView {
   constructor() {
     if (new.target === `AbstractView`) {

@@ -12,8 +12,8 @@ export const Point = {
   RANGE: 50
 };
 export const TimerBreakPoints = {
-  FAST: 10,
-  SLOW: 20
+  SLOW: 10,
+  FAST: 20
 };
 
 export const dimentions = new Map()

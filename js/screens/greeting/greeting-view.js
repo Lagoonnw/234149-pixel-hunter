@@ -36,4 +36,4 @@ export default class GreetingView extends AbstractView {
 
   onClick() {
   }
-};
+}

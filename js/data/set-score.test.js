@@ -3,19 +3,23 @@ import setGamePoints from './set-score.js';
 
 const defaultCorrectAnswer = {
   correct: true,
-  time: 15
+  time: 15,
+  type: `correct`
 };
 const defaultIncorrectAnswer = {
   correct: false,
-  time: 15
+  time: 15,
+  type: `wrong`
 };
 const correctFastAnswer = {
   correct: true,
-  time: 5
+  time: 25,
+  type: `fast`
 };
 const correctSlowAnswer = {
   correct: true,
-  time: 25
+  time: 5,
+  type: `slow`
 };
 let lives = 2;
 
@@ -60,6 +64,11 @@ describe(`Game setting score`, () => {
       answers.push(correctSlowAnswer);
       answers.push(defaultIncorrectAnswer);
       assert.equal(1000, setGamePoints(answers, lives));
+    });
+    it(`should return 1650 if 10 answers are correct: 10 is slow, with 3 saved lives`, () => {
+      lives = 3;
+      const answers = new Array(10).fill(correctFastAnswer);
+      assert.equal(1650, setGamePoints(answers, lives));
     });
   });
 });

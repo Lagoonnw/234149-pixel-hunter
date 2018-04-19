@@ -16,8 +16,8 @@ export default class GamePresentr {
       [GameTypes.double]: GameOneView,
       [GameTypes.triple]: GameThreeView
     };
-
     this.timer = new Timer(Time.MAX);
+
     this._die = -1;
     this._second = 1000;
   }
@@ -26,17 +26,17 @@ export default class GamePresentr {
     this.state = state;
     this.view = this.createView(this.state);
     this.show();
-    this.timer.start();
+    this.startTimer();
 
     this.state.subscribe(() => {
       if (this.state.level === this._die) {
+        this.stopTimer();
         const stats = new StatsPresentr();
         stats.init(this.state);
       } else {
         this.changeScreen(this.state);
       }
     });
-
   }
 
   createView(state) {
@@ -44,7 +44,12 @@ export default class GamePresentr {
       this.view.unbind();
     }
     this.view = new this.Views[state.questions[state.level].type](state);
+    this.setOnAnswerMethod(state);
 
+    return this.view;
+  }
+
+  setOnAnswerMethod(state) {
     this.view.onAnswer = (...args) => {
       let isAnswerCorrect = () => null;
 
@@ -58,12 +63,10 @@ export default class GamePresentr {
         isAnswerCorrect = this.checkThreeOptions(...args);
       }
 
-      this.timer.stop();
-      const answer = new Answer(isAnswerCorrect, this.timer.currentTime);
+      this.stopTimer();
+      const answer = new Answer(isAnswerCorrect, this.timer.time);
       this.state.addAnswer(answer);
     };
-
-    return this.view;
   }
 
   show() {
@@ -74,7 +77,7 @@ export default class GamePresentr {
     this.view = this.createView(state);
     this.show();
     this.timer.clear();
-    this.timer.start();
+    this.startTimer();
   }
 
   checkAnswer(value, answer) {
@@ -85,8 +88,6 @@ export default class GamePresentr {
     const [firstAnswer, secondAnswer] = this.state.questions[this.state.level].answers;
     const isFirstAnswerCorrect = this.checkAnswer(firstValue, firstAnswer);
     const isSecondAnswerCorrect = this.checkAnswer(secondValue, secondAnswer);
-
-    console.log(isFirstAnswerCorrect && isSecondAnswerCorrect);
 
     return isFirstAnswerCorrect && isSecondAnswerCorrect;
   }
@@ -101,4 +102,23 @@ export default class GamePresentr {
     return answers[index];
   }
 
+  pushWrongAnswer() {
+    const answer = new Answer(false, this.timer.time);
+    this.state.addAnswer(answer);
+  }
+
+  startTimer() {
+    this._timer = setInterval(() => {
+      this.timer.tick();
+      this.view.updateTimer(this.timer.time);
+      if (this.timer.time <= this.timer.zero) {
+        this.stopTimer();
+        this.pushWrongAnswer();
+      }
+    }, this._second);
+  }
+
+  stopTimer() {
+    clearInterval(this._timer);
+  }
 }

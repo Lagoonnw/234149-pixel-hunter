@@ -14,7 +14,7 @@ export default class RulesPresentr {
     const input = this.view.element.querySelector(`input`);
 
     const onSubmitBtnClick = () => {
-      this.state.userName = String.raw`${input.value.trim()}`;
+      this.state.user = String.raw`${input.value.trim()}`;
       this.view.unbind();
       game.init(this.state);
     };
