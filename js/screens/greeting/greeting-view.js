@@ -2,9 +2,6 @@ import AbstractView from '../../abstract-view.js';
 import {footer} from '../../templates/footer.js';
 
 export default class GreetingView extends AbstractView {
-  constructor() {
-    super();
-  }
 
   get template() {
     this._template = `

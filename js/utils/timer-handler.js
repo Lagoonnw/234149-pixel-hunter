@@ -1,7 +1,7 @@
-const fiveSeconds = 5;
+const remainingSeconds = 5;
 export default (value, element) => {
   element.textContent = value;
-  if (value === fiveSeconds) {
+  if (value === remainingSeconds) {
     element.classList.add(`blink`);
   }
 };
