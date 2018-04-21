@@ -12,12 +12,18 @@ export const Point = {
   RANGE: 50
 };
 export const TimerBreakPoints = {
-  FAST: 10,
-  SLOW: 20
+  SLOW: 10,
+  FAST: 20
 };
 
 export const dimentions = new Map()
     .set(`single`, {width: 705, height: 455})
     .set(`double`, {width: 468, height: 458})
     .set(`triple`, {width: 304, height: 455});
+
+export const GameTypes = {
+  single: `single`,
+  double: `double`,
+  triple: `triple`
+};
 

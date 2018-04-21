@@ -11,9 +11,9 @@ export class Answer {
     if (!this.correct) {
       return `wrong`;
     }
-    if (this.time < TimerBreakPoints.FAST) {
+    if (this.time > TimerBreakPoints.FAST) {
       return `fast`;
-    } else if (this.time > TimerBreakPoints.SLOW) {
+    } else if (this.time < TimerBreakPoints.SLOW) {
       return `slow`;
     } else {
       return `correct`;

@@ -1,20 +1,27 @@
 import {TOTAL_ANSWERS} from './../data/game-config';
+import AbstractView from '../abstract-view.js';
 
-const renderStatsBar = (answers) => {
-  const answerTypes = [];
+export default class StatusBarView extends AbstractView {
+  constructor(state) {
+    super();
+    this.state = state;
+  }
 
-  answers.forEach((answer) => {
-    answerTypes.push(`<li class="stats__result stats__result--${answer.type}"></li>`);
-  });
+  get template() {
+    const answers = [];
 
-  return `<div class="stats">
-    <ul class="stats">
-      ${answerTypes.join(``)}
-      ${new Array(TOTAL_ANSWERS - answerTypes.length)
-      .fill(`<li class="stats__result stats__result--unknown"></li>`)
-      .join(``)}
-    </ul>
-  </div>`;
-};
+    this.state.statistics.forEach((it) => {
+      answers.push(`<li class="stats__result stats__result--${it.type}"></li>`);
+    });
 
-export default renderStatsBar;
+    this._template = `<div class="stats">
+      <ul class="stats">
+      ${answers.join(``)}
+      ${new Array(TOTAL_ANSWERS - answers.length)
+      .fill(`<li class="stats__result stats__result--unknown"></li>`).join(``)}
+      </ul>
+    </div>`;
+
+    return this._template;
+  }
+}

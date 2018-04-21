@@ -1,10 +1,11 @@
 import {Lives, TOTAL_ANSWERS} from "./game-config";
 
-export class GameState {
+export default class GameState {
   constructor(state) {
     if (!state) {
       throw new Error(`State object must be passed to this class constructor`);
     }
+    this.listners = new Set();
     this.statistics = state.statistics;
     this.lives = state.lives;
     this.level = state.level;
@@ -14,20 +15,22 @@ export class GameState {
     this._falseAnswers = 0;
   }
 
-  set newUserName(name) {
+  set user(name) {
     this.userName = name;
   }
 
-  get _livesNumber() {
+  get livesNumber() {
     return this.lives;
   }
 
   nextLevel() {
     if (this._falseAnswers > Lives.MAX) {
-      return -1;
+      this.level = -1;
+      return this.level;
     }
     if (this.statistics.length === TOTAL_ANSWERS) {
-      return -1;
+      this.level = -1;
+      return this.level;
     }
     if (this.statistics.length === 0) {
       return this.level;
@@ -40,10 +43,22 @@ export class GameState {
       this._falseAnswers = ++this._falseAnswers;
     }
     this.statistics.push(answer);
-    this._checkLives(answer);
+    this.checkLives(answer);
+    this.nextLevel();
+    this.notifyAll();
   }
 
-  _checkLives(answer) {
+  subscribe(listener) {
+    this.listners.add(listener);
+  }
+
+  notifyAll() {
+    for (const listener of this.listners) {
+      listener(this.state);
+    }
+  }
+
+  checkLives(answer) {
     if (!answer.correct && this.lives > Lives.MIN) {
       return --this.lives;
     }
