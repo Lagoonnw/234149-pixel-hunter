@@ -30,6 +30,5 @@ export default class Application {
   static showStatistics(model) {
     const stats = new StatsPresentr(model);
     stats.init();
-
   }
 }
