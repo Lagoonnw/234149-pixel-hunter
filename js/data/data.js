@@ -1,4 +1,4 @@
-import {Lives} from "./game-config.js";
+// import {Lives} from "./game-config.js";
 
 const images = {
   paintings: [
@@ -49,13 +49,7 @@ const questionList = [
     answers: [false, true, false]
   }
 ];
-const gameQuestions = [...questionList, ...questionList, ...questionList];
+export const gameQuestions = [...questionList, ...questionList, ...questionList];
 gameQuestions.push(questionList[0]);
 
-export const initialState = {
-  statistics: [],
-  questions: gameQuestions,
-  lives: Lives.MAX,
-  level: 0,
-  userName: null
-};
+
