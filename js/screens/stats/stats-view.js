@@ -18,31 +18,30 @@ export default class StatsView extends AbstractView {
   }
 
   get template() {
-    this._template = `
-      <header class="header">
-        <div class="header__back">
-          <button class="back">
-            <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
-            <img src="img/logo_small.svg" width="101" height="44">
-          </button>
-        </div>
-      </header>
-      <div class="result">
-      <h1>${this.isItVictory()}</h1>
-      <table class="result__table">${this.results.map((it, i) => {
+    this._template = `<header class="header">
+    <div class="header__back">
+      <button class="back">
+        <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
+        <img src="img/logo_small.svg" width="101" height="44">
+      </button>
+    </div>
+    </header>
+    <div class="result">
+    <h1>${this.isItVictory()}</h1>
+    <table class="result__table">
+    ${this.results.map((it, i) => {
     const stats = new StatusBarView(it.statistics).template;
     const wrongAnswersNumber = it.statistics.filter((answer) => !answer.correct).length;
     const slowAnswersNumber = it.statistics.filter((answer) => answer.type === `slow`).length;
     const fastAnswersNumber = it.statistics.filter((answer) => answer.type === `fast`).length;
     const correctAnswersNumber = it.statistics.filter((answer) => answer.correct).length;
 
-    return `<tr>
-      <td class="result__number">${i + 1}.</td>
-         <td colspan="2">${stats}</td>
-         ${this.renderTotal(wrongAnswersNumber, correctAnswersNumber, it.statistics.length)}\n
-         </tr>
-         ${this.renderDetails(it.lives, fastAnswersNumber, slowAnswersNumber, wrongAnswersNumber, it.statistics.length)}\n     
-         ${this.renderTotalFinal(wrongAnswersNumber, it.statistics, it.lives)}`;
+    return `<tr><td class="result__number">${i + 1}.</td>
+    <td colspan="2">${stats}</td>
+    ${this.renderTotal(wrongAnswersNumber, correctAnswersNumber, it.statistics.length)}\n
+    </tr>
+    ${this.renderDetails(it.lives, fastAnswersNumber, slowAnswersNumber, wrongAnswersNumber, it.statistics.length)}\n     
+    ${this.renderTotalFinal(wrongAnswersNumber, it.statistics, it.lives)}`;
   })}</table>${footer}\n</div>`;
 
     return this._template;
