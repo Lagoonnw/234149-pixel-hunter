@@ -12,7 +12,8 @@ export default class GameThreeView extends AbstractView {
     super();
     this.state = state;
     this.header = getHeader(this.state);
-    this.stats = new StatusBarView(this.state).template;
+    this.stats = new StatusBarView(this.state.statistics).template;
+    this.backToIntro = new BackToIntro();
   }
 
   get template() {
@@ -37,7 +38,7 @@ export default class GameThreeView extends AbstractView {
   }
 
   bind() {
-    this.backToIntro = new BackToIntro(this.element);
+    this.backToIntro.element = this.element;
     this.options = Array.from(this.element.querySelectorAll(`.game__option`));
     this.onOptionClick = (evt) => {
       evt.preventDefault();

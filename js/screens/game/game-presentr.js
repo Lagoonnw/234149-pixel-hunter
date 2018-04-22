@@ -1,38 +1,38 @@
 import GameOneView from './game-1-view.js';
 import GameTwoView from './game-2-view.js';
 import GameThreeView from './game-3-view.js';
-import StatsPresentr from '../stats/stats-presentr.js';
 import render from '../../utils/render-screen.js';
 import {GameTypes} from '../../data/game-config.js';
 import {Answer} from '../../data/answer.js';
 import {Time} from '../../data/game-config';
 import Timer from '../../data/timer.js';
+import Application from "../../application";
 
 
 export default class GamePresentr {
-  constructor() {
+  constructor(model) {
+    this.model = model;
     this.Views = {
       [GameTypes.single]: GameTwoView,
       [GameTypes.double]: GameOneView,
       [GameTypes.triple]: GameThreeView
     };
     this.timer = new Timer(Time.MAX);
-
     this._die = -1;
-    this._second = 1000;
+    this._interval = 1000;
   }
 
-  init(state) {
-    this.state = state;
+  init() {
+    this.model.restart();
+    this.state = this.model.state;
     this.view = this.createView(this.state);
     this.show();
     this.startTimer();
 
-    this.state.subscribe(() => {
+    this.model.subscribe(() => {
       if (this.state.level === this._die) {
         this.stopTimer();
-        const stats = new StatsPresentr();
-        stats.init(this.state);
+        Application.showStatistics(this.model);
       } else {
         this.changeScreen(this.state);
       }
@@ -45,6 +45,10 @@ export default class GamePresentr {
     }
     this.view = new this.Views[state.questions[state.level].type](state);
     this.setOnAnswerMethod(state);
+
+    this.view.backToIntro.onClick = () => {
+      this.stopTimer();
+    };
 
     return this.view;
   }
@@ -65,7 +69,7 @@ export default class GamePresentr {
 
       this.stopTimer();
       const answer = new Answer(isAnswerCorrect, this.timer.time);
-      this.state.addAnswer(answer);
+      this.model.addAnswer(answer);
     };
   }
 
@@ -104,7 +108,7 @@ export default class GamePresentr {
 
   pushWrongAnswer() {
     const answer = new Answer(false, this.timer.time);
-    this.state.addAnswer(answer);
+    this.model.addAnswer(answer);
   }
 
   startTimer() {
@@ -115,7 +119,7 @@ export default class GamePresentr {
         this.stopTimer();
         this.pushWrongAnswer();
       }
-    }, this._second);
+    }, this._interval);
   }
 
   stopTimer() {

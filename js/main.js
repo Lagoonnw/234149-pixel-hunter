@@ -1,4 +1,3 @@
-import IntroPresentr from './screens/intro/intro-presentr.js';
+import Application from './application.js';
 
-const intro = new IntroPresentr();
-intro.init();
+Application.showIntro();

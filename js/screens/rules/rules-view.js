@@ -6,6 +6,7 @@ import BackToIntro from "../../utils/back-to-intro.js";
 export default class RulesView extends AbstractView {
   constructor() {
     super();
+    this.backToIntro = new BackToIntro();
   }
 
   get template() {
@@ -42,7 +43,7 @@ export default class RulesView extends AbstractView {
     this.form = this.element.querySelector(`form`);
     this.input = this.form.querySelector(`input`);
     this.submitBtn = this.form.querySelector(`.rules__button`);
-    this.backToIntro = new BackToIntro(this.element);
+    this.backToIntro.element = this.element;
     this.onInputKeyUp = () => {
       this.submitBtn.disabled = !this.form.checkValidity();
     };

@@ -12,7 +12,8 @@ export default class GameTwoView extends AbstractView {
     super();
     this.state = state;
     this.header = getHeader(this.state);
-    this.stats = new StatusBarView(this.state).template;
+    this.stats = new StatusBarView(this.state.statistics).template;
+    this.backToIntro = new BackToIntro();
   }
 
   get template() {
@@ -42,7 +43,7 @@ export default class GameTwoView extends AbstractView {
   }
 
   bind() {
-    this.backToIntro = new BackToIntro(this.element);
+    this.backToIntro.element = this.element;
     this.form = this.element.querySelector(`form`);
     this.onFormChange = () => {
       const isOptionChecked = this.form.querySelector(`form [name=question1]:checked`) !== null;

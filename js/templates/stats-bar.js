@@ -2,15 +2,15 @@ import {TOTAL_ANSWERS} from './../data/game-config';
 import AbstractView from '../abstract-view.js';
 
 export default class StatusBarView extends AbstractView {
-  constructor(state) {
+  constructor(statistics) {
     super();
-    this.state = state;
+    this.statistics = statistics;
   }
 
   get template() {
     const answers = [];
 
-    this.state.statistics.forEach((it) => {
+    this.statistics.forEach((it) => {
       answers.push(`<li class="stats__result stats__result--${it.type}"></li>`);
     });
 
