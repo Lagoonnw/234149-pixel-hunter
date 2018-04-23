@@ -6,47 +6,49 @@ import setScore from "../../data/set-score";
 import BackToIntro from "../../utils/back-to-intro.js";
 
 export default class StatsView extends AbstractView {
-  constructor(state) {
+  constructor(results) {
     super();
-    this.state = state;
-    this.stats = new StatusBarView(this.state).template;
+    this.results = results;
+    this.backToIntro = new BackToIntro();
 
     this._ZERO = 0;
-    this._wrongAnswersNumber = this.state.statistics.filter((answer) => !answer.correct).length;
-    this._slowAnswersNumber = this.state.statistics.filter((answer) => answer.type === `slow`).length;
-    this._fastAnswersNumber = this.state.statistics.filter((answer) => answer.type === `fast`).length;
-    this._correctAnswersNumber = this.state.statistics.filter((answer) => answer.correct).length;
+    this._currentGameIndex = 0;
+    this._wrongAnswersNumber = this.results[0].statistics.filter((answer) => !answer.correct).length;
+    this._currentGameAnswersLength = this.results[0].statistics.length;
   }
 
   get template() {
-    this._template = `
-      <header class="header">
-        <div class="header__back">
-          <button class="back">
-            <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
-            <img src="img/logo_small.svg" width="101" height="44">
-          </button>
-        </div>
-      </header>
-      <div class="result">
-      <h1>${this.isItVictory()}</h1>
-        <table class="result__table">
-          <tr>
-            <td class="result__number">1.</td>
-            <td colspan="2">${this.stats}</td>
-            ${this.renderTotal()}\n
-          </tr>
-          ${this.renderDetails()}\n     
-          ${this.renderTotalFinal()}\n
-        </table>
-        ${footer}\n
-      </div>`;
+    this._template = `<header class="header">
+    <div class="header__back">
+      <button class="back">
+        <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
+        <img src="img/logo_small.svg" width="101" height="44">
+      </button>
+    </div>
+    </header>
+    <div class="result">
+    <h1>${this.isItVictory()}</h1>
+    <table class="result__table">
+    ${this.results.map((it, i) => {
+    const stats = new StatusBarView(it.statistics).template;
+    const wrongAnswersNumber = it.statistics.filter((answer) => !answer.correct).length;
+    const slowAnswersNumber = it.statistics.filter((answer) => answer.type === `slow`).length;
+    const fastAnswersNumber = it.statistics.filter((answer) => answer.type === `fast`).length;
+    const correctAnswersNumber = it.statistics.filter((answer) => answer.correct).length;
+
+    return `<tr><td class="result__number">${i + 1}.</td>
+    <td colspan="2">${stats}</td>
+    ${this.renderTotal(wrongAnswersNumber, correctAnswersNumber, it.statistics.length)}\n
+    </tr>
+    ${this.renderDetails(it.lives, fastAnswersNumber, slowAnswersNumber, wrongAnswersNumber, it.statistics.length)}\n     
+    ${this.renderTotalFinal(wrongAnswersNumber, it.statistics, it.lives)}`;
+  })}</table>${footer}\n</div>`;
 
     return this._template;
   }
 
   bind() {
-    this.backToIntro = new BackToIntro(this.element);
+    this.backToIntro.element = this.element;
     this.backToIntro.bind();
   }
 
@@ -58,14 +60,14 @@ export default class StatsView extends AbstractView {
     if (this._wrongAnswersNumber > Lives.MAX) {
       return `Fail`;
     }
-    if (this.state.statistics.length < TOTAL_ANSWERS) {
+    if (this._currentGameAnswersLength < TOTAL_ANSWERS) {
       return `Fail`;
     }
     return `Победа!`;
   }
 
-  renderTotal() {
-    if (this._wrongAnswersNumber > Lives.MAX || this.state.statistics.length < TOTAL_ANSWERS) {
+  renderTotal(wrongAnswers, correctAnswers, length) {
+    if (wrongAnswers > Lives.MAX || length < TOTAL_ANSWERS) {
       return `
       <td class="result__total"></td>
       <td class="result__total  result__total--final">fail</td>`;
@@ -73,77 +75,77 @@ export default class StatsView extends AbstractView {
 
     return `
       <td class="result__points">×&nbsp;${Point.UNIT}</td>
-      <td class="result__total">${this._correctAnswersNumber * Point.UNIT}</td>`;
+      <td class="result__total">${correctAnswers * Point.UNIT}</td>`;
   }
 
-  renderTotalFinal() {
-    if (this._wrongAnswersNumber > Lives.MAX) {
+  renderTotalFinal(wrongAnswers, answers, lives) {
+    if (wrongAnswers > Lives.MAX) {
       return ``;
     }
-    if (this.state.statistics.length < TOTAL_ANSWERS) {
+    if (answers.length < TOTAL_ANSWERS) {
       return ``;
     }
 
     return `
       <tr>
-        <td colspan="5" class="result__total  result__total--final">${setScore(this.state.statistics, this.state.lives)}</td>
+        <td colspan="5" class="result__total  result__total--final">${setScore(answers, lives)}</td>
       </tr>`;
   }
 
-  renderBonusForLives() {
-    if (this.state.lives === Lives.MIN) {
+  renderBonusForLives(lives) {
+    if (lives === Lives.MIN) {
       return ``;
     }
     return `
       <tr>
         <td></td>
         <td class="result__extra">Бонус за жизни:</td>
-        <td class="result__extra">${this.state.lives}\&nbsp;\<span class="stats__result stats__result--alive"></span></td>
+        <td class="result__extra">${lives}\&nbsp;\<span class="stats__result stats__result--alive"></span></td>
         <td class="result__points">×&nbsp;${Point.RANGE}</td>
-        <td class="result__total">${this.state.lives * Point.RANGE}</td>
+        <td class="result__total">${lives * Point.RANGE}</td>
       </tr>`;
   }
 
-  renderBonusForFastAnswers() {
-    if (this._fastAnswersNumber === this._ZERO) {
+  renderBonusForFastAnswers(fastAnswersNumber) {
+    if (fastAnswersNumber === this._ZERO) {
       return ``;
     }
     return `
       <tr>
         <td></td>
         <td class="result__extra">Бонус за скорость:</td>
-        <td class="result__extra">${this._fastAnswersNumber}&nbsp;<span class="stats__result stats__result--fast"></span></td>
+        <td class="result__extra">${fastAnswersNumber}&nbsp;<span class="stats__result stats__result--fast"></span></td>
         <td class="result__points">×&nbsp;${Point.RANGE}</td>
-        <td class="result__total">${this._fastAnswersNumber * Point.RANGE}</td>
+        <td class="result__total">${fastAnswersNumber * Point.RANGE}</td>
       </tr>`;
   }
 
-  renderMulctForSlowAnswers() {
-    if (this._slowAnswersNumber === this._ZERO) {
+  renderMulctForSlowAnswers(slowAnswersNumber) {
+    if (slowAnswersNumber === this._ZERO) {
       return ``;
     }
     return `
       <tr>
         <td></td>
         <td class="result__extra">Штраф за медлительность:</td>
-        <td class="result__extra">${this._slowAnswersNumber}&nbsp;<span class="stats__result stats__result--slow"></span></td>
+        <td class="result__extra">${slowAnswersNumber}&nbsp;<span class="stats__result stats__result--slow"></span></td>
         <td class="result__points">×&nbsp;${Point.RANGE}</td>
-        <td class="result__total">-${this._slowAnswersNumber * Point.RANGE}</td>
+        <td class="result__total">-${slowAnswersNumber * Point.RANGE}</td>
       </tr>`;
   }
 
-  renderDetails() {
-    if (this.state.statistics.length < TOTAL_ANSWERS) {
+  renderDetails(lives, fastAnswersNumber, slowAnswersNumber, wrongAnswersNumber, length) {
+    if (length < TOTAL_ANSWERS) {
       return ``;
     }
 
-    if (this._wrongAnswersNumber > Lives.MAX) {
+    if (wrongAnswersNumber > Lives.MAX) {
       return ``;
     }
 
     return `
-      ${this.renderBonusForFastAnswers()}\n
-      ${this.renderBonusForLives()}\n
-      ${this.renderMulctForSlowAnswers()}\n`;
+      ${this.renderBonusForFastAnswers(fastAnswersNumber)}\n
+      ${this.renderBonusForLives(lives)}\n
+      ${this.renderMulctForSlowAnswers(slowAnswersNumber)}\n`;
   }
 }

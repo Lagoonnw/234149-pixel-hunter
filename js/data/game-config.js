@@ -1,3 +1,5 @@
+import {gameQuestions} from './data.js';
+
 export const TOTAL_ANSWERS = 10;
 export const Time = {
   MIN: 0,
@@ -25,5 +27,12 @@ export const GameTypes = {
   single: `single`,
   double: `double`,
   triple: `triple`
+};
+
+export const INITIAL_STATE = {
+  statistics: [],
+  questions: gameQuestions,
+  lives: Lives.MAX,
+  level: 0
 };
 

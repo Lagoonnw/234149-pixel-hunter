@@ -1,12 +1,11 @@
 import IntroView from './intro-view.js';
 import render from '../../utils/render-screen.js';
-import GreetingPresentr from '../greeting/greeting-presentr.js';
+import Application from '../../application.js';
 
 export default class IntroPresentr {
   init() {
     this.view = new IntroView();
-    this.view.onClick = () => greeting.init();
-    const greeting = new GreetingPresentr();
+    this.view.onClick = () => Application.showGreeting();
 
     render(this.view.element);
   }

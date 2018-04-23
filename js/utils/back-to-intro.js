@@ -1,15 +1,19 @@
-import IntroPresentr from './../screens/intro/intro-presentr.js';
+import Application from './../application.js';
 
 export default class BackToIntro {
-  constructor(element) {
-    this.arrow = element.querySelector(`button.back`);
-    this.intro = new IntroPresentr();
+  constructor() {
+  }
+
+  set element(element) {
+    this._element = element;
   }
 
   bind() {
+    this.arrow = this._element.querySelector(`button.back`);
     this.onArrowClick = (evt) => {
       evt.preventDefault();
-      this.intro.init();
+      this.onClick();
+      Application.showIntro();
     };
 
     this.arrow.addEventListener(`click`, this.onArrowClick);
@@ -17,5 +21,8 @@ export default class BackToIntro {
 
   unbind() {
     this.arrow.removeEventListener(`click`, this.onArrowClick);
+  }
+
+  onClick() {
   }
 }
