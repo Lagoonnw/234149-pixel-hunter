@@ -4,8 +4,44 @@ import RulesPresentr from './screens/rules/rules-presentr.js';
 import GamePresentr from './screens/game/game-presentr.js';
 import StatsPresentr from './screens/stats/stats-presentr.js';
 import GameModel from './data/game-model.js';
+import {adaptData} from './data/data-adapter.js';
+import {preloadImages} from './data/preload-images.js';
+import {initialState} from './data/game-config.js';
+import {showMessage} from './utils/show-message.js';
+
+const animationTime = 300;
+
+const checkResponseStatus = (response) => {
+  if (!response.ok) {
+    throw new Error(`${response.status} ${response.statusText}`);
+  }
+  return response;
+};
 
 export default class Application {
+  static start() {
+    const intro = new IntroPresentr();
+    const loadData = fetch(`https://es.dump.academy/pixel-hunter/questions`);
+
+    intro.init();
+    loadData
+        .then(checkResponseStatus)
+        .then((response) => response.json())
+        .then((data) => {
+          preloadImages(data)
+              .then(() => adaptData(data))
+              .then((res) => {
+                initialState.questions = res;
+                intro.stop();
+                setTimeout(() => {
+                  Application.showGreeting();
+                }, animationTime);
+              })
+              .catch((err) => showMessage(err));
+        })
+        .catch((err) => showMessage(err));
+  }
+
   static showIntro() {
     const intro = new IntroPresentr();
     intro.init();
@@ -16,13 +52,13 @@ export default class Application {
     greeting.init();
   }
 
-  static showRules() {
+  static showRules(userName) {
+    const model = new GameModel(userName);
     const rules = new RulesPresentr();
-    rules.init();
+    rules.init(model);
   }
 
-  static showGame(userName) {
-    const model = new GameModel(userName);
+  static showGame(model) {
     const game = new GamePresentr(model);
     game.init();
   }

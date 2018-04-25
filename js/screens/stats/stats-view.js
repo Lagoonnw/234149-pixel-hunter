@@ -27,7 +27,7 @@ export default class StatsView extends AbstractView {
     </div>
     </header>
     <div class="result">
-    <h1>${this.isItVictory()}</h1>
+    <h1>${this._isItVictory()}</h1>
     <table class="result__table">
     ${this.results.map((it, i) => {
     const stats = new StatusBarView(it.statistics).template;
@@ -38,10 +38,10 @@ export default class StatsView extends AbstractView {
 
     return `<tr><td class="result__number">${i + 1}.</td>
     <td colspan="2">${stats}</td>
-    ${this.renderTotal(wrongAnswersNumber, correctAnswersNumber, it.statistics.length)}\n
+    ${this._renderTotal(wrongAnswersNumber, correctAnswersNumber, it.statistics.length)}\n
     </tr>
-    ${this.renderDetails(it.lives, fastAnswersNumber, slowAnswersNumber, wrongAnswersNumber, it.statistics.length)}\n     
-    ${this.renderTotalFinal(wrongAnswersNumber, it.statistics, it.lives)}`;
+    ${this._renderDetails(it.lives, fastAnswersNumber, slowAnswersNumber, wrongAnswersNumber, it.statistics.length)}\n     
+    ${this._renderTotalFinal(wrongAnswersNumber, it.statistics, it.lives)}`;
   })}</table>${footer}\n</div>`;
 
     return this._template;
@@ -56,7 +56,7 @@ export default class StatsView extends AbstractView {
     this.backToIntro.unbind();
   }
 
-  isItVictory() {
+  _isItVictory() {
     if (this._wrongAnswersNumber > Lives.MAX) {
       return `Fail`;
     }
@@ -66,7 +66,7 @@ export default class StatsView extends AbstractView {
     return `Победа!`;
   }
 
-  renderTotal(wrongAnswers, correctAnswers, length) {
+  _renderTotal(wrongAnswers, correctAnswers, length) {
     if (wrongAnswers > Lives.MAX || length < TOTAL_ANSWERS) {
       return `
       <td class="result__total"></td>
@@ -78,7 +78,7 @@ export default class StatsView extends AbstractView {
       <td class="result__total">${correctAnswers * Point.UNIT}</td>`;
   }
 
-  renderTotalFinal(wrongAnswers, answers, lives) {
+  _renderTotalFinal(wrongAnswers, answers, lives) {
     if (wrongAnswers > Lives.MAX) {
       return ``;
     }
@@ -92,7 +92,7 @@ export default class StatsView extends AbstractView {
       </tr>`;
   }
 
-  renderBonusForLives(lives) {
+  _renderBonusForLives(lives) {
     if (lives === Lives.MIN) {
       return ``;
     }
@@ -106,7 +106,7 @@ export default class StatsView extends AbstractView {
       </tr>`;
   }
 
-  renderBonusForFastAnswers(fastAnswersNumber) {
+  _renderBonusForFastAnswers(fastAnswersNumber) {
     if (fastAnswersNumber === this._ZERO) {
       return ``;
     }
@@ -120,7 +120,7 @@ export default class StatsView extends AbstractView {
       </tr>`;
   }
 
-  renderMulctForSlowAnswers(slowAnswersNumber) {
+  _renderMulctForSlowAnswers(slowAnswersNumber) {
     if (slowAnswersNumber === this._ZERO) {
       return ``;
     }
@@ -134,7 +134,7 @@ export default class StatsView extends AbstractView {
       </tr>`;
   }
 
-  renderDetails(lives, fastAnswersNumber, slowAnswersNumber, wrongAnswersNumber, length) {
+  _renderDetails(lives, fastAnswersNumber, slowAnswersNumber, wrongAnswersNumber, length) {
     if (length < TOTAL_ANSWERS) {
       return ``;
     }
@@ -144,8 +144,8 @@ export default class StatsView extends AbstractView {
     }
 
     return `
-      ${this.renderBonusForFastAnswers(fastAnswersNumber)}\n
-      ${this.renderBonusForLives(lives)}\n
-      ${this.renderMulctForSlowAnswers(slowAnswersNumber)}\n`;
+      ${this._renderBonusForFastAnswers(fastAnswersNumber)}\n
+      ${this._renderBonusForLives(lives)}\n
+      ${this._renderMulctForSlowAnswers(slowAnswersNumber)}\n`;
   }
 }

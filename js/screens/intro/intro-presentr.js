@@ -9,4 +9,8 @@ export default class IntroPresentr {
 
     render(this.view.element);
   }
+
+  stop() {
+    this.view.fade();
+  }
 }

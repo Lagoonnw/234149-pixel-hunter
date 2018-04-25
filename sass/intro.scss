@@ -7,6 +7,13 @@
   background-size: contain;
 
   position: relative;
+  opacity: 1;
+  transition: 0.3s all ease;
+
+  &.fade {
+    opacity: 0;
+    transition: 0.3s all ease;
+  }
 }
 
 .intro__asterisk {

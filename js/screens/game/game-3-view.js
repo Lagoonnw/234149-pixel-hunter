@@ -1,11 +1,9 @@
 import AbstractView from '../../abstract-view.js';
-import scaleImg from '../../utils/resize';
-import {dimentions} from '../../data/game-config';
 import {footer} from '../../templates/footer';
 import getHeader from '../../templates/header.js';
 import StatusBarView from '../../templates/stats-bar.js';
-import BackToIntro from "../../utils/back-to-intro.js";
-import timerHandler from "../../utils/timer-handler";
+import BackToIntro from '../../utils/back-to-intro.js';
+import timerHandler from '../../utils/timer-handler.js';
 
 export default class GameThreeView extends AbstractView {
   constructor(state) {
@@ -19,14 +17,14 @@ export default class GameThreeView extends AbstractView {
   get template() {
     this._template = `${this.header}\n
     <div class="game">
-    <p class="game__task">${this.state.questions[this.state.level].title}</p>
+    <p class="game__task">${this.state.questions[this.state.level].question}</p>
     <form class="game__content  game__content--triple">
     ${this.state.questions[this.state.level].options.map((option, i) => {
     return `
     <div class="game__option">
-      <img src="${option.url}" alt="Option ${i + 1}" 
-      width="${scaleImg(dimentions.get(`triple`), option.size).width}" 
-      height="${scaleImg(dimentions.get(`triple`), option.size).height}">
+      <img src="${option.url}" alt="Option ${i + 1}" data-type="${this.state.questions[this.state.level].answers[i]}" 
+      width="${option.size.width}" 
+      height="${option.size.height}">
     </div>`;
   }).join(``)}
     </form>
@@ -42,8 +40,8 @@ export default class GameThreeView extends AbstractView {
     this.options = Array.from(this.element.querySelectorAll(`.game__option`));
     this.onOptionClick = (evt) => {
       evt.preventDefault();
-      const _el = evt.target;
-      this.onAnswer(this.options.indexOf(_el));
+      const value = evt.target.children[0].dataset.type;
+      this.onAnswer(value);
     };
 
     for (const option of this.options) {
@@ -66,5 +64,4 @@ export default class GameThreeView extends AbstractView {
     const timer = this.element.querySelector(`.game__timer`);
     timerHandler(value, timer);
   }
-
 }

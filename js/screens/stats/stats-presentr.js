@@ -6,6 +6,7 @@ export default class StatsPresentr {
     this.model = model;
     this.results = [model.state];
   }
+
   init() {
     this.view = new StatsView(this.results);
     render(this.view.element);
