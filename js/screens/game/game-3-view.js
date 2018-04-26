@@ -21,8 +21,8 @@ export default class GameThreeView extends AbstractView {
     <form class="game__content  game__content--triple">
     ${this.state.questions[this.state.level].options.map((option, i) => {
     return `
-    <div class="game__option">
-      <img src="${option.url}" alt="Option ${i + 1}" data-type="${this.state.questions[this.state.level].answers[i]}" 
+    <div class="game__option" data-type="${this.state.questions[this.state.level].answers[i]}">
+      <img src="${option.url}" alt="Option ${i++}"  
       width="${option.size.width}" 
       height="${option.size.height}">
     </div>`;
@@ -39,8 +39,7 @@ export default class GameThreeView extends AbstractView {
     this.backToIntro.element = this.element;
     this.options = Array.from(this.element.querySelectorAll(`.game__option`));
     this.onOptionClick = (evt) => {
-      evt.preventDefault();
-      const value = evt.target.children[0].dataset.type;
+      const value = evt.target.dataset.type;
       this.onAnswer(value);
     };
 

@@ -8,15 +8,9 @@ import {adaptData} from './data/data-adapter.js';
 import {preloadImages} from './data/preload-images.js';
 import {initialState} from './data/game-config.js';
 import {showMessage} from './utils/show-message.js';
+import {checkResponseStatus} from './utils/check-response';
 
 const animationTime = 300;
-
-const checkResponseStatus = (response) => {
-  if (!response.ok) {
-    throw new Error(`${response.status} ${response.statusText}`);
-  }
-  return response;
-};
 
 export default class Application {
   static start() {
@@ -52,13 +46,13 @@ export default class Application {
     greeting.init();
   }
 
-  static showRules(userName) {
-    const model = new GameModel(userName);
+  static showRules() {
     const rules = new RulesPresentr();
-    rules.init(model);
+    rules.init();
   }
 
-  static showGame(model) {
+  static showGame(userName) {
+    const model = new GameModel(userName);
     const game = new GamePresentr(model);
     game.init();
   }

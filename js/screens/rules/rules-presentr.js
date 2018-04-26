@@ -3,15 +3,14 @@ import render from '../../utils/render-screen';
 import Application from "../../application";
 
 export default class RulesPresentr {
-  init(model) {
+  init() {
     this.view = new RulesView();
     this.view.onClick = () => onSubmitBtnClick();
 
     const onSubmitBtnClick = () => {
       const input = this.view.element.querySelector(`input`);
-      model.player = String.raw`${input.value.trim()}`;
       this.view.unbind();
-      Application.showGame(model);
+      Application.showGame(String.raw`${input.value.trim()}`);
     };
 
     render(this.view.element);

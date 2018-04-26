@@ -21,16 +21,17 @@ export default class GameTwoView extends AbstractView {
       <p class="game__task">${this.state.questions[this.state.level].question}</p>
     <form class="game__content  game__content--wide">
     ${this.state.questions[this.state.level].options.map((option, i) => {
+    i += 1;
     return `<div class="game__option">
-      <img src="${option.url}" alt="Option ${i + 1}" 
+      <img src="${option.url}" alt="Option ${i}" 
       width="${option.size.width}" 
       height="${option.size.height}">
       <label class="game__answer  game__answer--photo">
-        <input name="question${i + 1}" type="radio" value="photo">
+        <input name="question${i}" type="radio" value="photo">
         <span>Фото</span>
       </label>
       <label class="game__answer  game__answer--wide  game__answer--paint">
-        <input name="question${i + 1}" type="radio" value="painting">
+        <input name="question${i}" type="radio" value="painting">
         <span>Рисунок</span>
       </label>
     </div>`;

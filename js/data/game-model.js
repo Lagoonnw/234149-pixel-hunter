@@ -54,6 +54,5 @@ export default class GameModel {
   restart() {
     this.state = Object.assign({}, initialState);
     this.state.statistics = [];
-    this.userName = null;
   }
 }
