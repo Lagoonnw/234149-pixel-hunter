@@ -35,14 +35,15 @@ export default class StatsView extends AbstractView {
     const slowAnswersNumber = it.statistics.filter((answer) => answer.type === `slow`).length;
     const fastAnswersNumber = it.statistics.filter((answer) => answer.type === `fast`).length;
     const correctAnswersNumber = it.statistics.filter((answer) => answer.correct).length;
-
+    
     return `<tr><td class="result__number">${i + 1}.</td>
     <td colspan="2">${stats}</td>
     ${this._renderTotal(wrongAnswersNumber, correctAnswersNumber, it.statistics.length)}\n
+    ${this._renderDetails(it.lives, fastAnswersNumber, slowAnswersNumber, wrongAnswersNumber, it.statistics.length)}\n
     </tr>
-    ${this._renderDetails(it.lives, fastAnswersNumber, slowAnswersNumber, wrongAnswersNumber, it.statistics.length)}\n     
+      
     ${this._renderTotalFinal(wrongAnswersNumber, it.statistics, it.lives)}`;
-  })}</table>${footer}\n</div>`;
+  }).join(``)}</table>${footer}\n</div>`;
 
     return this._template;
   }
@@ -83,7 +84,7 @@ export default class StatsView extends AbstractView {
       return ``;
     }
     if (answers.length < TOTAL_ANSWERS) {
-      return ``;
+      return;
     }
 
     return `
