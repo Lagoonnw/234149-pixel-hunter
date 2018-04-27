@@ -21,17 +21,14 @@ export default class Application {
     loadData
         .then(checkResponseStatus)
         .then((response) => response.json())
-        .then((data) => {
-          preloadImages(data)
-              .then(() => adaptData(data))
-              .then((res) => {
-                initialState.questions = res;
-                intro.stop();
-                setTimeout(() => {
-                  Application.showGreeting();
-                }, animationTime);
-              })
-              .catch((err) => showMessage(err));
+        .then(adaptData)
+        .then(preloadImages)
+        .then((res) => {
+          initialState.questions = res;
+          intro.stop();
+          setTimeout(() => {
+            Application.showGreeting();
+          }, animationTime);
         })
         .catch((err) => showMessage(err));
   }

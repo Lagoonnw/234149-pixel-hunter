@@ -9,7 +9,10 @@ const AnswerTypeMapper = {
 const preprocessAnswersToOptions = (answers) => answers.map((answer) => {
   return {
     url: answer.image.url,
-    size: answer.image.size
+    size: {
+      width: answer.image.width,
+      height: answer.image.height
+    }
   };
 });
 
