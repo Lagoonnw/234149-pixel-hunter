@@ -23,7 +23,7 @@ export default class GameTwoView extends AbstractView {
     ${this.state.questions[this.state.level].options.map((option, i) => {
     i += 1;
     return `<div class="game__option">
-      <img src="${option.url}" alt="Option ${i}" 
+      <img data-src="${option.url}" alt="Option ${i}" 
       width="${option.size.width}" 
       height="${option.size.height}">
       <label class="game__answer  game__answer--photo">

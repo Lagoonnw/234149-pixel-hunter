@@ -21,7 +21,7 @@ export default class GameOneView extends AbstractView {
     ${this.state.questions[this.state.level].options.map((option, i) => {
     i += 1;
     return `<div class="game__option">
-      <img src="${option.url}" 
+      <img data-src="${option.url}" 
       alt="Option ${i + 1}" 
       width="${option.size.width}" 
       height="${option.size.height}">

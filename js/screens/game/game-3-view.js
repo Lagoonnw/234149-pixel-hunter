@@ -22,7 +22,7 @@ export default class GameThreeView extends AbstractView {
     ${this.state.questions[this.state.level].options.map((option, i) => {
     return `
     <div class="game__option" data-type="${this.state.questions[this.state.level].answers[i]}">
-      <img src="${option.url}" alt="Option ${i++}"  
+      <img data-src="${option.url}" alt="Option ${i++}"  
       width="${option.size.width}" 
       height="${option.size.height}">
     </div>`;
