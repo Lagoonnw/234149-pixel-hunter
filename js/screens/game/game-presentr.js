@@ -2,13 +2,11 @@ import GameOneView from './game-1-view.js';
 import GameTwoView from './game-2-view.js';
 import GameThreeView from './game-3-view.js';
 import render from '../../utils/render-screen.js';
-import {GameTypes, AnswerType, APP_ID} from '../../data/game-config.js';
+import {GameTypes, AnswerType} from '../../data/game-config.js';
 import {Answer} from '../../data/answer.js';
 import {Time} from '../../data/game-config';
 import Timer from '../../data/timer.js';
 import Application from '../../application.js';
-import {showMessage} from '../../utils/show-message.js';
-import {checkResponseStatus} from '../../utils/check-response';
 
 export default class GamePresentr {
   constructor(model) {
@@ -35,28 +33,13 @@ export default class GamePresentr {
     this.model.subscribe(() => {
       if (this.state.level === this._die) {
         const result = {
+          userName: this.model.userName,
           statistics: this.model.state.statistics,
           lives: this.model.state.lives
         };
-        const url = `https://es.dump.academy/pixel-hunter/stats/${APP_ID}-${this.model.userName}`;
-        const fetchRequest = {
-          method: `POST`,
-          body: JSON.stringify(result),
-          headers: {
-            'Content-Type': `application/json`
-          }
-        };
-
         this._stopTimer();
-        fetch(url, fetchRequest)
-            .then(() => {
-              fetch(url)
-                  .then(checkResponseStatus)
-                  .then((response) => response.json())
-                  .then((data) => Application.showStatistics(data))
-                  .catch((err) => showMessage(`Ошибка: ${err}`));
-            })
-            .catch(() => showMessage(`Результаты не были отправлены на сервер`));
+        Application.sendResultToServer(result)
+            .then(Application.showStatistics(this.model.userName));
       } else {
         this._changeScreen(this.state);
       }
