@@ -9,6 +9,7 @@ import {preloadImages} from './data/preload-images.js';
 import {initialState} from './data/game-config.js';
 import {showMessage} from './utils/show-message.js';
 import {checkResponseStatus} from './utils/check-response';
+import {APP_ID} from "./data/game-config";
 
 const animationTime = 300;
 
@@ -54,8 +55,27 @@ export default class Application {
     game.init();
   }
 
-  static showStatistics(model) {
-    const stats = new StatsPresentr(model);
-    stats.init();
+  static showStatistics(userName) {
+    const url = `https://es.dump.academy/pixel-hunter/stats/${APP_ID}-${userName}`;
+    fetch(url)
+        .then(checkResponseStatus)
+        .then((response) => response.json())
+        .then((data) => {
+          const stats = new StatsPresentr(data);
+          stats.init();
+        })
+        .catch((err) => showMessage(err));
+  }
+
+  static sendResultToServer(result) {
+    const url = `https://es.dump.academy/pixel-hunter/stats/${APP_ID}-${result.userName}`;
+    const fetchRequest = {
+      method: `POST`,
+      body: JSON.stringify(result),
+      headers: {
+        'Content-Type': `application/json`
+      }
+    };
+    return fetch(url, fetchRequest).catch(() => showMessage(`Данные не были отправлены`));
   }
 }

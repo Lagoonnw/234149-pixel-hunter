@@ -7,6 +7,13 @@ const clearMainScreen = () => {
 };
 
 const renderScreen = (screen) => {
+  const imgs = screen.querySelectorAll(`img[data-src]`);
+  if (imgs) {
+    for (const img of imgs) {
+      const value = img.dataset.src;
+      img.setAttribute(`src`, value);
+    }
+  }
   clearMainScreen();
   mainScreen.appendChild(screen);
 };
