@@ -1,20 +1,15 @@
-import {Lives, TOTAL_ANSWERS, INITIAL_STATE} from "./game-config";
+import {Lives, TOTAL_ANSWERS, initialState} from "./game-config";
 
 export default class GameModel {
   constructor(userName = null) {
     this.userName = userName;
     this.listners = new Set();
+
     this._falseAnswers = 0;
     this._latestGameIndex = 2;
   }
 
-  restart() {
-    this.state = Object.assign({}, INITIAL_STATE);
-    this.state.statistics = [];
-    this.userName = null;
-  }
-
-  updateLevel() {
+  _updateLevel() {
     if (this._falseAnswers > Lives.MAX) {
       this.state.level = -1;
       return this.state.level;
@@ -34,25 +29,30 @@ export default class GameModel {
       this._falseAnswers = ++this._falseAnswers;
     }
     this.state.statistics.push(answer);
-    this.checkLives(answer);
-    this.updateLevel();
-    this.notifyAll();
+    this._checkLives(answer);
+    this._updateLevel();
+    this._notifyAll();
   }
 
   subscribe(listener) {
     this.listners.add(listener);
   }
 
-  notifyAll() {
+  _notifyAll() {
     for (const listener of this.listners) {
       listener(this.state);
     }
   }
 
-  checkLives(answer) {
+  _checkLives(answer) {
     if (!answer.correct && this.state.lives > Lives.MIN) {
       return --this.state.lives;
     }
     return this.state.lives;
+  }
+
+  restart() {
+    this.state = Object.assign({}, initialState);
+    this.state.statistics = [];
   }
 }

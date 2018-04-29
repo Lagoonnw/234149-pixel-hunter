@@ -1,6 +1,4 @@
 import AbstractView from '../../abstract-view.js';
-import scaleImg from '../../utils/resize';
-import {dimentions} from '../../data/game-config';
 import {footer} from '../../templates/footer';
 import getHeader from '../../templates/header.js';
 import StatusBarView from '../../templates/stats-bar.js';
@@ -20,19 +18,20 @@ export default class GameTwoView extends AbstractView {
     this._template = `
     ${this.header}\n
     <div class="game">
-      <p class="game__task">${this.state.questions[this.state.level].title}</p>
+      <p class="game__task">${this.state.questions[this.state.level].question}</p>
     <form class="game__content  game__content--wide">
     ${this.state.questions[this.state.level].options.map((option, i) => {
+    i += 1;
     return `<div class="game__option">
-      <img src="${option.url}" alt="Option ${i + 1}" 
-      width="${scaleImg(dimentions.get(`single`), option.size).width}" 
-      height="${scaleImg(dimentions.get(`single`), option.size).height}">
+      <img src="${option.url}" alt="Option ${i}" 
+      width="${option.size.width}" 
+      height="${option.size.height}">
       <label class="game__answer  game__answer--photo">
-        <input name="question${i + 1}" type="radio" value="photo">
+        <input name="question${i}" type="radio" value="photo">
         <span>Фото</span>
       </label>
       <label class="game__answer  game__answer--wide  game__answer--paint">
-        <input name="question${i + 1}" type="radio" value="paint">
+        <input name="question${i}" type="radio" value="painting">
         <span>Рисунок</span>
       </label>
     </div>`;
@@ -59,7 +58,6 @@ export default class GameTwoView extends AbstractView {
   }
 
   onAnswer() {
-
   }
 
   unbind() {

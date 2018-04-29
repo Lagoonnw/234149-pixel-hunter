@@ -4,10 +4,10 @@ export class Answer {
   constructor(isCorrect, time) {
     this.correct = (isCorrect) ? isCorrect : false;
     this.time = (time) ? time : 30;
-    this.type = this.setType();
+    this.type = this._setType();
   }
 
-  setType() {
+  _setType() {
     if (!this.correct) {
       return `wrong`;
     }

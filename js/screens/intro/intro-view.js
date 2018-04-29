@@ -26,6 +26,11 @@ export default class IntroView extends AbstractView {
     this.asteriskBtn.addEventListener(`click`, this.onAsteriskBtnClick);
   }
 
+  fade() {
+    const element = this.element.querySelector(`.intro`);
+    element.classList.add(`fade`);
+  }
+
   onClick() {
   }
 }
