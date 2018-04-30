@@ -1,9 +1,9 @@
-import {TimerBreakPoints} from "./game-config.js";
+import {TimerBreakPoints, Time} from "./game-config.js";
 
 export class Answer {
   constructor(isCorrect, time) {
     this.correct = (isCorrect) ? isCorrect : false;
-    this.time = (time) ? time : 30;
+    this.time = (time) ? time : Time.MAX;
     this.type = this._setType();
   }
 

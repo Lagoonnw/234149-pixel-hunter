@@ -9,19 +9,9 @@ export default class GameModel {
     this._latestGameIndex = 2;
   }
 
-  _updateLevel() {
-    if (this._falseAnswers > Lives.MAX) {
-      this.state.level = -1;
-      return this.state.level;
-    }
-    if (this.state.statistics.length === TOTAL_ANSWERS) {
-      this.state.level = -1;
-      return this.state.level;
-    }
-    if (this.state.statistics.length === 0) {
-      return this.state.level;
-    }
-    return this.state.level++;
+  restart() {
+    this.state = Object.assign({}, initialState);
+    this.state.statistics = [];
   }
 
   addAnswer(answer) {
@@ -38,6 +28,21 @@ export default class GameModel {
     this.listners.add(listener);
   }
 
+  _updateLevel() {
+    if (this._falseAnswers > Lives.MAX) {
+      this.state.level = -1;
+      return this.state.level;
+    }
+    if (this.state.statistics.length === TOTAL_ANSWERS) {
+      this.state.level = -1;
+      return this.state.level;
+    }
+    if (this.state.statistics.length === 0) {
+      return this.state.level;
+    }
+    return this.state.level++;
+  }
+
   _notifyAll() {
     for (const listener of this.listners) {
       listener(this.state);
@@ -49,10 +54,5 @@ export default class GameModel {
       return --this.state.lives;
     }
     return this.state.lives;
-  }
-
-  restart() {
-    this.state = Object.assign({}, initialState);
-    this.state.statistics = [];
   }
 }

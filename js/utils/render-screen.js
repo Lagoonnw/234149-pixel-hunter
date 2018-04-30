@@ -6,14 +6,19 @@ const clearMainScreen = () => {
   }
 };
 
-const renderScreen = (screen) => {
+const setSrcToImgs = (screen) => {
   const imgs = screen.querySelectorAll(`img[data-src]`);
-  if (imgs) {
-    for (const img of imgs) {
-      const value = img.dataset.src;
-      img.setAttribute(`src`, value);
-    }
+  if (!imgs) {
+    return;
   }
+  for (const img of imgs) {
+    const value = img.dataset.src;
+    img.setAttribute(`src`, value);
+  }
+};
+
+const renderScreen = (screen) => {
+  setSrcToImgs(screen);
   clearMainScreen();
   mainScreen.appendChild(screen);
 };

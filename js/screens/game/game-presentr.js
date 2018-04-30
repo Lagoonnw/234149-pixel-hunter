@@ -4,7 +4,7 @@ import GameThreeView from './game-3-view.js';
 import render from '../../utils/render-screen.js';
 import {GameTypes, AnswerType} from '../../data/game-config.js';
 import {Answer} from '../../data/answer.js';
-import {Time} from '../../data/game-config';
+import {Time} from '../../data/game-config.js';
 import Timer from '../../data/timer.js';
 import Application from '../../application.js';
 
@@ -23,13 +23,11 @@ export default class GamePresentr {
   }
 
   init() {
-
     this.model.restart();
     this.state = this.model.state;
     this.view = this._createView(this.state);
     this._showView();
     this._startTimer();
-
     this.model.subscribe(() => {
       if (this.state.level === this._die) {
         const result = {
@@ -52,7 +50,6 @@ export default class GamePresentr {
     }
     this.view = new this.Views[state.questions[state.level].type](state);
     this._setOnAnswerMethod(state);
-
     this.view.backToIntro.onClick = () => {
       this._stopTimer();
     };
@@ -73,7 +70,6 @@ export default class GamePresentr {
       if (state.questions[state.level].type === GameTypes.triple) {
         isAnswerCorrect = this._checkThreeOptions(...args);
       }
-
       this._stopTimer();
       const answer = new Answer(isAnswerCorrect, this.timer.time);
       this.model.addAnswer(answer);
