@@ -1,12 +1,12 @@
 import AbstractView from '../../abstract-view.js';
 import {Lives, Time, TOTAL_ANSWERS} from '../../data/game-config';
 import {footer} from '../../templates/footer';
-import BackToIntro from "../../utils/back-to-intro.js";
+import BackToGreeting from "../../utils/back-to-greeting.js";
 
 export default class RulesView extends AbstractView {
   constructor() {
     super();
-    this.backToIntro = new BackToIntro();
+    this.backToIntro = new BackToGreeting();
   }
 
   get template() {

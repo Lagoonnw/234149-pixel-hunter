@@ -3,13 +3,13 @@ import {footer} from '../../templates/footer';
 import StatusBarView from '../../templates/stats-bar.js';
 import {Lives, Point, TOTAL_ANSWERS} from '../../data/game-config.js';
 import setScore from "../../data/set-score";
-import BackToIntro from "../../utils/back-to-intro.js";
+import BackToGreeting from "../../utils/back-to-greeting.js";
 
 export default class StatsView extends AbstractView {
   constructor(results) {
     super();
     this.results = results;
-    this.backToIntro = new BackToIntro();
+    this.backToIntro = new BackToGreeting();
 
     this._ZERO = 0;
     this._currentGameIndex = 0;

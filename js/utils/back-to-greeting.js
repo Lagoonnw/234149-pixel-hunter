@@ -1,7 +1,7 @@
 import Application from './../application.js';
 import {showMessage} from './show-message.js';
 
-export default class BackToIntro {
+export default class BackToGreeting {
   constructor() {
   }
 
@@ -17,7 +17,7 @@ export default class BackToIntro {
       this.onClick();
       showMessage(`Ваш игровой прогресс будет потерян`);
       setTimeout(() => {
-        Application.showIntro();
+        Application.showGreeting();
       }, timeToGo);
     };
 

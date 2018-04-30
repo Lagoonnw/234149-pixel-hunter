@@ -2,7 +2,7 @@ import AbstractView from '../../abstract-view.js';
 import {footer} from '../../templates/footer';
 import getHeader from '../../templates/header.js';
 import StatusBarView from '../../templates/stats-bar.js';
-import BackToIntro from "../../utils/back-to-intro.js";
+import BackToGreeting from "../../utils/back-to-greeting.js";
 import timerHandler from "../../utils/timer-handler";
 
 export default class GameTwoView extends AbstractView {
@@ -11,7 +11,7 @@ export default class GameTwoView extends AbstractView {
     this.state = state;
     this.header = getHeader(this.state);
     this.stats = new StatusBarView(this.state.statistics).template;
-    this.backToIntro = new BackToIntro();
+    this.backToIntro = new BackToGreeting();
   }
 
   get template() {
