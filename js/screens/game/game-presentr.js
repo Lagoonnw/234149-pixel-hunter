@@ -37,7 +37,8 @@ export default class GamePresentr {
         };
         this._stopTimer();
         Application.sendResultToServer(result)
-            .then(Application.showStatistics(this.model.userName));
+            .then(() => Application.showStatistics(this.model.userName))
+            .catch(() => `Что-то пошло не так`);
       } else {
         this._changeScreen(this.state);
       }

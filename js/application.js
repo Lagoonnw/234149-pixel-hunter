@@ -76,6 +76,7 @@ export default class Application {
         'Content-Type': `application/json`
       }
     };
-    return fetch(url, fetchRequest).catch(() => showMessage(`Данные не были отправлены`));
+    return fetch(url, fetchRequest)
+        .catch(() => showMessage(`Данные не были отправлены`));
   }
 }

@@ -69,5 +69,4 @@ export default class GameTwoView extends AbstractView {
     const timer = this.element.querySelector(`.game__timer`);
     timerHandler(value, timer);
   }
-
 }
