@@ -28,9 +28,26 @@ export const GameTypes = {
   triple: `triple`
 };
 
-export const AnswerType = {
+export const UserAnswerType = {
   PAINTING: `painting`,
   PHOTO: `photo`
+};
+
+export const AnswerType = {
+  CORRECT: `correct`,
+  FAST: `fast`,
+  SLOW: `slow`,
+  WRONG: `wrong`
+};
+
+export const TotalGameResult = {
+  WIN: `Победа!`,
+  FAIL: `Fail`
+};
+
+export const ServerPaths = {
+  DATA: `https://es.dump.academy/pixel-hunter/questions`,
+  STATS: `https://es.dump.academy/pixel-hunter/stats/`
 };
 
 export const initialState = {

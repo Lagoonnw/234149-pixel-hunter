@@ -1,7 +1,7 @@
 import StatsView from './stats-view.js';
 import render from '../../utils/render-screen.js';
 
-export default class StatsPresentr {
+export default class StatsPresenter {
   constructor(data) {
     this.results = data;
   }

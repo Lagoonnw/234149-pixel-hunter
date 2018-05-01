@@ -2,7 +2,7 @@ import RulesView from './rules-view.js';
 import render from '../../utils/render-screen';
 import Application from "../../application";
 
-export default class RulesPresentr {
+export default class RulesPresenter {
   init() {
     this.view = new RulesView();
     this.view.onClick = () => onSubmitBtnClick();

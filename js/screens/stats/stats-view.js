@@ -1,7 +1,7 @@
 import AbstractView from '../../abstract-view.js';
 import {footer} from '../../templates/footer';
 import StatusBarView from '../../templates/stats-bar.js';
-import {Lives, Point, TOTAL_ANSWERS} from '../../data/game-config.js';
+import {Lives, Point, TOTAL_ANSWERS, UserAnswerType, TotalGameResult} from '../../data/game-config.js';
 import setScore from "../../data/set-score";
 import BackToGreeting from "../../utils/back-to-greeting.js";
 
@@ -32,8 +32,8 @@ export default class StatsView extends AbstractView {
     ${this.results.map((it, i) => {
     const stats = new StatusBarView(it.statistics).template;
     const wrongAnswersNumber = it.statistics.filter((answer) => !answer.correct).length;
-    const slowAnswersNumber = it.statistics.filter((answer) => answer.type === `slow`).length;
-    const fastAnswersNumber = it.statistics.filter((answer) => answer.type === `fast`).length;
+    const slowAnswersNumber = it.statistics.filter((answer) => answer.type === UserAnswerType.SLOW).length;
+    const fastAnswersNumber = it.statistics.filter((answer) => answer.type === UserAnswerType.FAST).length;
     const correctAnswersNumber = it.statistics.filter((answer) => answer.correct).length;
 
     return `<tr><td class="result__number">${i + 1}.</td>
@@ -59,12 +59,12 @@ export default class StatsView extends AbstractView {
 
   _isItVictory() {
     if (this._wrongAnswersNumber > Lives.MAX) {
-      return `Fail`;
+      return TotalGameResult.FAIL;
     }
     if (this._currentGameAnswersLength < TOTAL_ANSWERS) {
-      return `Fail`;
+      return TotalGameResult.FAIL;
     }
-    return `Победа!`;
+    return TotalGameResult.WIN;
   }
 
   _renderTotal(wrongAnswers, correctAnswers, length) {

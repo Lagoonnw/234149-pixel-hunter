@@ -1,4 +1,4 @@
-import {TOTAL_ANSWERS, Lives, Point} from './game-config.js';
+import {TOTAL_ANSWERS, Lives, Point, AnswerType} from './game-config.js';
 
 const setGamePoints = (answers = [], lives = Lives.MIN) => {
   if (lives < Lives.MIN || lives > Lives.MAX) {
@@ -15,13 +15,13 @@ const setGamePoints = (answers = [], lives = Lives.MIN) => {
   }
 
   const points = answers.reduce((sum, it) => {
-    if (it.correct && it.type === `correct`) {
+    if (it.correct && it.type === AnswerType.CORRECT) {
       return sum + Point.UNIT;
     }
-    if (it.correct && it.type === `fast`) {
+    if (it.correct && it.type === AnswerType.FAST) {
       return sum + Point.UNIT + Point.RANGE;
     }
-    if (it.correct && it.type === `slow`) {
+    if (it.correct && it.type === AnswerType.SLOW) {
       return sum + Point.UNIT - Point.RANGE;
     }
     return sum;

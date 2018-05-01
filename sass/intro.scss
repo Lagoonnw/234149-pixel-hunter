@@ -26,6 +26,7 @@
   position: relative;
   top: 220px;
   left: 30px;
+  animation: load 2s ease-in-out infinite;
 
   &:hover {
     color: $link-hover-color;
@@ -41,4 +42,16 @@
 
   position: absolute;
   bottom: 0;
+}
+
+@keyframes load {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
 }

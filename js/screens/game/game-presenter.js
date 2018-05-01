@@ -2,13 +2,13 @@ import GameOneView from './game-1-view.js';
 import GameTwoView from './game-2-view.js';
 import GameThreeView from './game-3-view.js';
 import render from '../../utils/render-screen.js';
-import {GameTypes, AnswerType} from '../../data/game-config.js';
+import {GameTypes, UserAnswerType} from '../../data/game-config.js';
 import Answer from '../../data/answer.js';
 import {Time} from '../../data/game-config.js';
 import Timer from '../../data/timer.js';
 import Application from '../../application.js';
 
-export default class GamePresentr {
+export default class GamePresenter {
   constructor(model) {
     this.model = model;
     this.views = {
@@ -18,8 +18,8 @@ export default class GamePresentr {
     };
     this.timer = new Timer(Time.MAX);
 
-    this._die = -1;
-    this._interval = 1000;
+    this.DIE = -1;
+    this.INTERVAL = 1000;
   }
 
   init() {
@@ -29,7 +29,7 @@ export default class GamePresentr {
     this._showView();
     this._startTimer();
     this.model.subscribe(() => {
-      if (this.state.level === this._die) {
+      if (this.state.level === this.DIE) {
         const result = {
           userName: this.model.userName,
           statistics: this.model.state.statistics,
@@ -49,7 +49,7 @@ export default class GamePresentr {
     if (this.view) {
       this.view.unbind();
     }
-    this.view = new this.Views[state.questions[state.level].type](state);
+    this.view = new this.views[state.questions[state.level].type](state);
     this._setOnAnswerMethod(state);
     this.view.backToIntro.onClick = () => {
       this._stopTimer();
@@ -107,7 +107,7 @@ export default class GamePresentr {
 
   _checkThreeOptions(value) {
     const task = (this.state.questions[this.state.level].question.split(` `)[1] === `фото`) ?
-      AnswerType.PHOTO : AnswerType.PAINTING;
+      UserAnswerType.PHOTO : UserAnswerType.PAINTING;
 
     return this._checkAnswer(value, task);
   }
@@ -125,7 +125,7 @@ export default class GamePresentr {
         this._stopTimer();
         this._pushWrongAnswer();
       }
-    }, this._interval);
+    }, this.INTERVAL);
   }
 
   _stopTimer() {

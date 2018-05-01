@@ -1,22 +1,22 @@
-import {TimerBreakPoints, Time} from "./game-config.js";
+import {TimerBreakPoints, Time, AnswerType} from "./game-config.js";
 
 export default class Answer {
   constructor(isCorrect, time) {
-    this.correct = (isCorrect) ? isCorrect : false;
+    this.correct = isCorrect;
     this.time = (time) ? time : Time.MAX;
     this.type = this._setType();
   }
 
   _setType() {
     if (!this.correct) {
-      return `wrong`;
+      return AnswerType.WRONG;
     }
     if (this.time > TimerBreakPoints.FAST) {
-      return `fast`;
+      return AnswerType.FAST;
     } else if (this.time < TimerBreakPoints.SLOW) {
-      return `slow`;
+      return AnswerType.SLOW;
     } else {
-      return `correct`;
+      return AnswerType.CORRECT;
     }
   }
 }
