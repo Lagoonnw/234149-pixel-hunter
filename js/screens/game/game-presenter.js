@@ -11,7 +11,7 @@ import Application from '../../application.js';
 export default class GamePresenter {
   constructor(model) {
     this.model = model;
-    this.views = {
+    this.viewsMapping = {
       [GameTypes.single]: GameTwoView,
       [GameTypes.double]: GameOneView,
       [GameTypes.triple]: GameThreeView
@@ -49,7 +49,7 @@ export default class GamePresenter {
     if (this.view) {
       this.view.unbind();
     }
-    this.view = new this.views[state.questions[state.level].type](state);
+    this.view = new this.viewsMapping[state.questions[state.level].type](state);
     this._setOnAnswerMethod(state);
     this.view.backToIntro.onClick = () => {
       this._stopTimer();
