@@ -3,7 +3,7 @@ import GameTwoView from './game-2-view.js';
 import GameThreeView from './game-3-view.js';
 import render from '../../utils/render-screen.js';
 import {GameTypes, AnswerType} from '../../data/game-config.js';
-import {Answer} from '../../data/answer.js';
+import Answer from '../../data/answer.js';
 import {Time} from '../../data/game-config.js';
 import Timer from '../../data/timer.js';
 import Application from '../../application.js';
@@ -11,7 +11,7 @@ import Application from '../../application.js';
 export default class GamePresentr {
   constructor(model) {
     this.model = model;
-    this.Views = {
+    this.views = {
       [GameTypes.single]: GameTwoView,
       [GameTypes.double]: GameOneView,
       [GameTypes.triple]: GameThreeView
