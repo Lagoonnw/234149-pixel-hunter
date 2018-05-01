@@ -77,6 +77,6 @@ export default class Application {
       }
     };
     return fetch(url, fetchRequest)
-        .catch(() => showMessage(`Данные не были отправлены`));
+        .catch(() => showMessage(`Данные не были отправлены на сервер`));
   }
 }
